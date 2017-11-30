@@ -4,8 +4,6 @@ const { SLACK_TOKEN, BOT_NAME, ICON_EMOJI } = process.env;
 
 export function Reply(req: any, res: any, fullText: string, json: object) {
 
-    console.log(new Date().toISOString(), fullText);
-
     res.status(200).send();
 
     const { event } = req.body;
