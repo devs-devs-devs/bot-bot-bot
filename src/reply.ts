@@ -27,6 +27,6 @@ export function Reply(req: any, res: any, fullText: string, json: object) {
     agent
         .get('https://slack.com/api/chat.postMessage')
         .query(payload)
-        .end((err,res) => console.log());
+        .end((err,res) => console.log(err || {}));
 
 }
