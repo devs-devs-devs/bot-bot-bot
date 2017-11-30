@@ -27,6 +27,8 @@ export default class BotBotBot {
                 return res.status(200).send(body.challenge);
             } else if (body.hasOwnProperty('event') && body.event.hasOwnProperty('text')) {
 
+                console.log(+new Date().toISOString(), body.event.text);
+
                 const fullText = body.event.text;
 
                 let [ trigger, params ] = fullText.split(' ', Math.max(fullText.indexOf(' '), fullText.length));
