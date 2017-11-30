@@ -4,7 +4,7 @@ import { Reply } from '../reply';
 
 import { HelloWorld } from './hello-world';
 
-const { VERIFICATION_TOKEN, TRIGGER_PREFIX } = process.env;
+const { VERIFICATION_TOKEN, TRIGGER_PREFIX, BOT_NAME } = process.env;
 
 export default class BotBotBot {
 
@@ -21,13 +21,13 @@ export default class BotBotBot {
         app.all('/', (req, res) => {
             const { body } = req;
 
-            console.log(body);
-
             if (!body.hasOwnProperty('token') && body.token !== VERIFICATION_TOKEN) return res.status(401).send();
 
             if (body.hasOwnProperty('challenge')) {
                 return res.status(200).send(body.challenge);
             } else if (body.hasOwnProperty('event') && body.event.hasOwnProperty('text')) {
+
+                if (BOT_NAME === body.event.username) return res.status(200).send();
 
                 console.log(new Date().toISOString(), body.event.text);
 
