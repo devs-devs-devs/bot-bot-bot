@@ -1,13 +1,13 @@
 export class HelloWorld {
 
-    private name: string = 'hello';
+    private trigger: string = 'hello-world';
 
     constructor() {
-        console.log(this.name, 'loaded');
+        console.log(this.trigger, 'loaded');
     }
 
-    reply(message: object) {
-        console.log(message);
+    reply(params: string) {
+        return params;
     }
 
 }
