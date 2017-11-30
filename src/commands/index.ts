@@ -1,6 +1,10 @@
 import { Application } from 'express';
 
+import { Reply } from '../reply';
+
 import { HelloWorld } from './hello-world';
+
+const { VERIFICATION_TOKEN, TRIGGER_PREFIX } = process.env;
 
 export default class BotBotBot {
 
@@ -17,23 +21,21 @@ export default class BotBotBot {
         app.all('/', (req, res) => {
             const { body } = req;
 
+            if (!body.hasOwnProperty('token') && body.token !== VERIFICATION_TOKEN) return res.status(401).send();
+
             if (body.hasOwnProperty('challenge')) {
                 return res.status(200).send(body.challenge);
             } else if (body.hasOwnProperty('event') && body.event.hasOwnProperty('text')) {
 
-                console.log(body);
-
                 const fullText = body.event.text;
 
-                const [ botTrigger, command ] = fullText.split(' ', 2);
-                const params = fullText.substring(Math.max(fullText.indexOf(' ', 3), fullText.length));
+                let [ trigger, params ] = fullText.split(' ', Math.max(fullText.indexOf(' '), fullText.length));
 
-                if (botTrigger !== '!b') return res.status(200).send();
+                if (trigger[0] !== TRIGGER_PREFIX) return res.status(200).send();
 
-                if (this.registeredCommands[command]) {
-                    console.log(new Date().toISOString(), fullText);
-                    return res.status(200).send(this.registeredCommands[command].reply(params) || {});
-                }
+                const triggerReply = this.registeredCommands[trigger.substring((1))];
+
+                if (triggerReply) return Reply(req, res, fullText, triggerReply.reply(params, body.event));
 
             }
 
@@ -45,7 +47,7 @@ export default class BotBotBot {
 
     registerCommand(command: any) {
         let instantiatedCommand = new command();
-        this.registeredCommands[instantiatedCommand.trigger] = instantiatedCommand;
+        this.registeredCommands[instantiatedCommand.command] = instantiatedCommand;
     }
 
 }
