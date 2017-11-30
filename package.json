@@ -1,0 +1,33 @@
+{
+  "name": "bot-bot-bot",
+  "version": "1.0.0",
+  "description": "A fuckin' slack bot mates.",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.0.39",
+    "@types/node": "^8.0.53",
+    "dotenv": "^4.0.0",
+    "nodemon": "^1.12.1",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.6.2"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/nodemon --exec ./node_modules/.bin/ts-node -- ./src/bot.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devs-devs-devs/bot-bot-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devs-devs-devs/bot-bot-bot/issues"
+  },
+  "homepage": "https://github.com/devs-devs-devs/bot-bot-bot#readme"
+}
