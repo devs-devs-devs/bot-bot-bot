@@ -10,7 +10,7 @@ export function Reply(req: any, res: any, fullText: string, json: object) {
 
     const defaultMessage = {
         channel:event.channel,
-        text:String(+new Date)+' yes m8',
+        text:'',
         as_user:false,
         username:BOT_NAME,
         icon_emoji:ICON_EMOJI
