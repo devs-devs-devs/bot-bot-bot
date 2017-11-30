@@ -1,6 +1,6 @@
 import agent = require('superagent');
 
-const { SLACK_TOKEN } = process.env;
+const { SLACK_TOKEN, BOT_NAME, ICON_EMOJI } = process.env;
 
 export function Reply(req: any, res: any, fullText: string, json: object) {
 
@@ -11,7 +11,9 @@ export function Reply(req: any, res: any, fullText: string, json: object) {
     const defaultMessage = {
         channel:event.channel,
         text:String(+new Date)+' yes m8',
-        as_user:'bot_bot_bot'
+        as_user:false,
+        username:BOT_NAME,
+        icon_emoji:ICON_EMOJI
     };
 
     const payload = {
