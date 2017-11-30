@@ -22,11 +22,11 @@ export function Reply(req: any, res: any, fullText: string, json: object) {
         token: SLACK_TOKEN
     };
 
-    agent
-        .get('https://slack.com/api/chat.postMessage')
-        .query(payload)
-        .end((err,res) => {
-            if (err) console.log(err)
-        });
+    // agent
+    //     .get('https://slack.com/api/chat.postMessage')
+    //     .query(payload)
+    //     .end((err,res) => {
+    //         if (err) console.log(err)
+    //     });
 
 }

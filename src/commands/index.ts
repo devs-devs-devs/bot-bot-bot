@@ -3,6 +3,7 @@ import { Application } from 'express';
 import { Reply } from '../reply';
 
 import { HelloWorld } from './hello-world';
+import { Copypasta } from './copypasta';
 
 const { VERIFICATION_TOKEN, TRIGGER_PREFIX, BOT_NAME } = process.env;
 
@@ -13,7 +14,8 @@ export default class BotBotBot {
     constructor(app: Application) {
 
         [
-            HelloWorld
+            HelloWorld,
+            Copypasta
         ].forEach(command => {
             this.registerCommand(command);
         });
@@ -33,7 +35,8 @@ export default class BotBotBot {
 
                 const fullText = body.event.text;
 
-                let [ trigger, params ] = fullText.split(' ', Math.max(fullText.indexOf(' '), fullText.length));
+                let trigger = fullText.split(' ', 1)[0];
+                let params = fullText.substring(fullText.indexOf(' ')).trim();
 
                 if (trigger[0] !== TRIGGER_PREFIX) return res.status(200).send();
 
@@ -50,8 +53,17 @@ export default class BotBotBot {
     }
 
     registerCommand(command: any) {
-        let instantiatedCommand = new command();
-        this.registeredCommands[instantiatedCommand.command] = instantiatedCommand;
+
+        const instantiatedCommand = new command();
+        const { registeredCommands } = this;
+
+        const { commands } = instantiatedCommand;
+
+        for (let commandKey of commands) {
+            const isAlreadyRegistered = !!registeredCommands[commandKey];
+            if (!isAlreadyRegistered) registeredCommands[commandKey] = instantiatedCommand;
+        }
+
     }
 
 }

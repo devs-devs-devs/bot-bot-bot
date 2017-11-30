@@ -1,9 +1,9 @@
 export class HelloWorld {
 
-    private command: string = 'hello-world';
+    private commands: object = ['hello-world'];
 
     constructor() {
-        console.log(this.command, 'loaded');
+        console.log(this.commands, 'loaded');
     }
 
     reply(params: string, event: object) {
