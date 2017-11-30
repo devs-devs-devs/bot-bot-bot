@@ -6,6 +6,7 @@ export class Copypasta {
 
     constructor() {
         console.log(this.commands, 'loaded');
+        this.copypastas = [];
     }
 
     reply(params: string, event: object) {
