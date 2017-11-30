@@ -21,13 +21,15 @@ export default class BotBotBot {
         app.all('/', (req, res) => {
             const { body } = req;
 
+            console.log(body);
+
             if (!body.hasOwnProperty('token') && body.token !== VERIFICATION_TOKEN) return res.status(401).send();
 
             if (body.hasOwnProperty('challenge')) {
                 return res.status(200).send(body.challenge);
             } else if (body.hasOwnProperty('event') && body.event.hasOwnProperty('text')) {
 
-                console.log(+new Date().toISOString(), body.event.text);
+                console.log(new Date().toISOString(), body.event.text);
 
                 const fullText = body.event.text;
 
