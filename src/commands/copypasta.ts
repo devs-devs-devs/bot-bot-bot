@@ -1,5 +1,6 @@
 import Data from '../services/data';
 import Users from '../services/users';
+import { Application, Response, Request } from 'express';
 
 function shuffle(array: any) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -26,13 +27,19 @@ export class Copypasta {
 
     private copypastas: any;
 
-    constructor() {
+    constructor(app: Application) {
         console.log(this.commands, 'loaded');
 
         const data = Data.namespace('copypasta');
         if (!data.copypastas) data.copypastas = {};
 
         this.copypastas = data.copypastas;
+
+        app.get('/copypastas', this.serveCopypasta.bind(this));
+    }
+
+    serveCopypasta(req: Request, res: Response) {
+        res.send(this.copypastas);
     }
 
     reply(params: string, event: any) {

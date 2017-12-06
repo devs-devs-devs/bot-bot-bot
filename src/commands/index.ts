@@ -20,7 +20,7 @@ export default class BotBotBot {
             HelloWorld,
             Copypasta
         ].forEach(command => {
-            this.registerCommand(command);
+            this.registerCommand(command, app);
         });
 
         Data.startAutoSave();
@@ -30,8 +30,8 @@ export default class BotBotBot {
 
     }
 
-    registerCommand(command: any) {
-        const instantiatedCommand = new command();
+    registerCommand(command: any, app: Application) {
+        const instantiatedCommand = new command(app);
         const { registeredCommands } = this;
 
         const { commands } = instantiatedCommand;
