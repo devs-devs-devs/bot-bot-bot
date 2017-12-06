@@ -26,7 +26,7 @@ class Data {
 
     startAutoSave() {
         console.log('Saving...');
-        fs.writeFile(Settings.dataFilePath, JSON.stringify(this.data), () => {
+        fs.writeFile(Settings.dataFilePath, JSON.stringify(this.data, null, 4), () => {
             console.log('SAVED');
         });
         setTimeout(() => {
@@ -35,7 +35,7 @@ class Data {
     }
 
     save() {
-        fs.writeFileSync(Settings.dataFilePath, JSON.stringify(this.data));
+        fs.writeFileSync(Settings.dataFilePath, JSON.stringify(this.data, null, 4));
     }
 
     namespace(namespace: string) {

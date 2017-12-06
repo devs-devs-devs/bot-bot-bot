@@ -3,7 +3,7 @@ import { Application, Request, Response } from 'express';
 import Data from '../services/data';
 import Reply from '../services/reply';
 // import Settings from '../services/settings';
-// import Users from '../services/users';
+import Users from '../services/users';
 
 import { HelloWorld } from './hello-world';
 import { Copypasta } from './copypasta';
@@ -24,8 +24,9 @@ export default class BotBotBot {
         });
 
         Data.startAutoSave();
+        Users.autoUpdateUsers();
 
-        app.all('/', this.parseHook);
+        app.all('/', this.parseHook.bind(this));
 
     }
 
@@ -43,8 +44,7 @@ export default class BotBotBot {
 
     parseHook(req: Request, res: Response) {
         const { body } = req;
-
-        console.log(body.event);
+        const { registeredCommands } = this;
 
         if (!body.hasOwnProperty('token') && body.token !== VERIFICATION_TOKEN) return res.status(401).send();
 
@@ -62,7 +62,7 @@ export default class BotBotBot {
 
             if (trigger[0] !== TRIGGER_PREFIX) return res.status(200).send();
 
-            const triggerReply = this.registeredCommands[trigger.substring((1))];
+            const triggerReply = registeredCommands[trigger.substring((1))];
 
             if (triggerReply) return Reply(req, res, fullText, triggerReply.reply(params, body.event));
         }

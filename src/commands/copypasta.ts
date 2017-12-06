@@ -1,4 +1,24 @@
 import Data from '../services/data';
+import Users from '../services/users';
+
+function shuffle(array: any) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
 
 export class Copypasta {
 
@@ -10,26 +30,51 @@ export class Copypasta {
         console.log(this.commands, 'loaded');
 
         const data = Data.namespace('copypasta');
-        if (!data.copypastas) data.copypastas = [];
+        if (!data.copypastas) data.copypastas = {};
 
         this.copypastas = data.copypastas;
     }
 
-    reply(params: string, event: object) {
+    reply(params: string, event: any) {
 
         const action = params.split(' ', 1)[0];
 
         const actions = ['add', 'delete'];
 
-        console.log(event);
+        if (actions.indexOf(action) !== -1) {
 
-        // if (ations.indexOf(action) >= 0) {
-        //     this.copypastas.push(params.substring(params.indexOf(' ')).trim());
-        //     return {
-        //         text:'Added: '
-        //     }
-        // }
+            if (action === 'add') return this.addAction(params.substring(params.indexOf(' ')).trim(), event);
 
+        } else {
+
+            const keys = Object.keys(this.copypastas);
+            if (!keys.length) return {
+                text:'No copypastas'
+            };
+
+            let key = shuffle(keys)[0];
+
+            return {
+                text: this.copypastas[key].copypasta
+            }
+
+        }
+
+    }
+
+    addAction(copypasta: string, event: any) {
+
+        if (!copypasta) return {
+            text:'NO COPYPASTA M8 WTF'
+        };
+
+        const key = Object.keys(this.copypastas).length;
+
+        this.copypastas[key] = { ...event, copypasta };
+
+        return {
+            text:`Copy pasta \`${key}\` added by @${Users.id(event.user).name}`
+        }
     }
 
 }
