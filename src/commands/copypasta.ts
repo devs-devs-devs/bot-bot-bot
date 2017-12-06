@@ -35,7 +35,7 @@ export class Copypasta {
 
         this.copypastas = data.copypastas;
 
-        app.get('/copypastas', this.serveCopypasta.bind(this));
+        app.get('/copypasta', this.serveCopypasta.bind(this));
     }
 
     serveCopypasta(req: Request, res: Response) {
