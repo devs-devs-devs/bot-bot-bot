@@ -44,6 +44,8 @@ export default class BotBotBot {
     parseHook(req: Request, res: Response) {
         const { body } = req;
 
+        console.log(body.event);
+
         if (!body.hasOwnProperty('token') && body.token !== VERIFICATION_TOKEN) return res.status(401).send();
 
         if (body.hasOwnProperty('challenge')) return res.status(200).send(body.challenge);
