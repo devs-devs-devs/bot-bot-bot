@@ -80,7 +80,7 @@ export class Copypasta {
         this.copypastas[key] = { ...event, copypasta };
 
         return {
-            text:`Copy pasta \`${key}\` added by @${Users.id(event.user).name}`
+            text:`Copy pasta \`${key}\` added by <@${Users.id(event.user).name}>`
         }
     }
 
