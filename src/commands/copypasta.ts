@@ -62,11 +62,27 @@ export class Copypasta {
             let key = shuffle(keys)[0];
 
             return {
+                as_user:false,
+                icon_url: Users.id(this.copypastas[key].user).profile.image_192,
+                username: `COPYPASTA #${key}`,
                 text: this.copypastas[key].copypasta
             }
 
         }
 
+    }
+
+    deleteAction(id: any = NaN) {
+        if (id == ~~id && this.copypastas[id]) {
+            delete this.copypastas[id];
+            return {
+                text:'Deleted!'
+            }
+        } else {
+            return {
+                text:'Fak u dolan!'
+            }
+        }
     }
 
     addAction(copypasta: string, event: any) {
