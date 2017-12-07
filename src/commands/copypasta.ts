@@ -62,11 +62,9 @@ export class Copypasta {
 
             let key = shuffle(keys)[0];
 
-            console.log(Users.id(this.copypastas[key].user).profile);
-
             return {
                 as_user:false,
-                icon_url: Users.id(this.copypastas[key].user).profile.image_192,
+                icon_url: Users.id(this.copypastas[key].user).profile.image_192.replace('https','http'),
                 username: `COPYPASTA #${key}`,
                 text: this.copypastas[key].copypasta
             }
