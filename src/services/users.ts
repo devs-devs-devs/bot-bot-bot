@@ -58,9 +58,9 @@ class Users {
             .get('https://slack.com/api/users.list')
             .query(payload)
             .end((err,res) => {
-                if (err) console.log(err);
+                if (err) return console.log(err);
 
-                this.members = res.body.members;
+                if (res.body.members) this.members = res.body.members;
 
                 setInterval(() => {
                     this.autoUpdateUsers()
