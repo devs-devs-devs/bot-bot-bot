@@ -65,6 +65,9 @@ export default class BotBotBot {
             const triggerReply = registeredCommands[trigger.substring((1))];
 
             if (triggerReply) return Reply(req, res, fullText, triggerReply.reply(params, body.event));
+
+
+
         }
 
         return res.status(404).send('Command not found');

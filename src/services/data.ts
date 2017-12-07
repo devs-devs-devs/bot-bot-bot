@@ -19,9 +19,19 @@ class Data {
     }
 
     read() {
-        const data = fs.readFileSync(Settings.dataFilePath).toString();
-        console.log('DATA', data);
-        this.data = JSON.parse(data);
+        const data = JSON.parse(fs.readFileSync(Settings.dataFilePath).toString());
+        this.data = data;
+
+        if (data.copypasta.copypastas.hasOwnProperty('length')) {
+            const copypastas = [...data.copypasta.copypastas];
+            data.copypasta.copypastas = {};
+            copypastas.forEach((copypasta,key) => {
+                data.copypasta.copypastas[key] = copypasta;
+            });
+        }
+
+        //Lets fix some shit here
+        console.log();
     }
 
     startAutoSave() {
