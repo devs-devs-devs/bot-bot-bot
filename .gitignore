@@ -58,5 +58,6 @@ typings/
 .env
 
 .idea
-bot-data
+bot-data/
 bot-data.json
+dist/

@@ -6,6 +6,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "forever": "^0.15.3",
     "superagent": "^3.8.1"
   },
   "devDependencies": {
@@ -18,7 +19,9 @@
     "typescript": "^2.6.2"
   },
   "scripts": {
-    "start": "./node_modules/.bin/nodemon --exec ./node_modules/.bin/ts-node -- ./src/bot.ts",
+    "watch": "./node_modules/.bin/nodemon --exec ./node_modules/.bin/ts-node -- ./src/bot.ts",
+    "build": "./node_modules/.bin/tsc",
+    "start": "./node_modules/.bin/forever start ./dist/bot.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
