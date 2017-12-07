@@ -62,9 +62,13 @@ export class Copypasta {
 
             let key = shuffle(keys)[0];
 
+            const cp = this.copypastas[key];
+            const date = new Date(cp.ts * 1000).toISOString().split('T').join(' ').split('.')[0];
+            const user = Users.id(cp.user).name;
+
             return {
                 as_user:false,
-                username: `COPYPASTA #${key} - added by ${Users.id(this.copypastas[key].user).name} on ${new Date(this.copypastas[key].ts * 1000)}`,
+                username: `COPYPASTA #${key} - added by ${user} on ${date}`,
                 text: this.copypastas[key].copypasta
             }
 
