@@ -64,8 +64,7 @@ export class Copypasta {
 
             return {
                 as_user:false,
-                icon_url: Users.id(this.copypastas[key].user).profile.image_192.replace('https','http'),
-                username: `COPYPASTA #${key}`,
+                username: `COPYPASTA #${key} - added by ${Users.id(this.copypastas[key].user).name} on ${new Date(this.copypastas[key].ts * 1000)}`,
                 text: this.copypastas[key].copypasta
             }
 
