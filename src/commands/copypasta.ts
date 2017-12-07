@@ -23,7 +23,7 @@ function shuffle(array: any) {
 
 export class Copypasta {
 
-    private commands: object = ['copypasta'];
+    private commands: object = ['cp','copypasta'];
 
     private copypastas: any;
 
@@ -51,6 +51,7 @@ export class Copypasta {
         if (actions.indexOf(action) !== -1) {
 
             if (action === 'add') return this.addAction(params.substring(params.indexOf(' ')).trim(), event);
+            if (action === 'delete') return this.deleteAction(params.substring(params.indexOf(' ')).trim(), event);
 
         } else {
 
@@ -72,7 +73,8 @@ export class Copypasta {
 
     }
 
-    deleteAction(id: any = NaN) {
+    deleteAction(copypasta: any = NaN) {
+        const id = copypasta.split(' ')[0].trim();
         if (id == ~~id && this.copypastas[id]) {
             delete this.copypastas[id];
             return {
