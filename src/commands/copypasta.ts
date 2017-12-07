@@ -51,7 +51,7 @@ export class Copypasta {
         if (actions.indexOf(action) !== -1) {
 
             if (action === 'add') return this.addAction(params.substring(params.indexOf(' ')).trim(), event);
-            if (action === 'delete') return this.deleteAction(params.substring(params.indexOf(' ')).trim(), event);
+            if (action === 'delete') return this.deleteAction(params.substring(params.indexOf(' ')).trim());
 
         } else {
 
