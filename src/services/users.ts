@@ -71,8 +71,11 @@ class Users {
     }
 
     id(id: string) {
-        const member = this.members.filter((member: any) => member.id === id);
-        return member.length ? member[0] : false;
+        const member = (this.members||[]).filter((member: any) => member.id === id);
+        return member.length ? member[0] : {
+            name:id,
+            id
+        };
     }
 
 }
