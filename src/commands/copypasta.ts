@@ -97,7 +97,7 @@ export class Copypasta {
         };
 
         const keys = Object.keys(this.copypastas);
-        const key = keys[keys.length - 1] + 1
+        const key = ~~keys[keys.length - 1] + 1
 
         this.copypastas[key] = { ...event, copypasta };
 
