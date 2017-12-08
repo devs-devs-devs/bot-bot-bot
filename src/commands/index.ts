@@ -46,7 +46,7 @@ export default class BotBotBot {
         const { body } = req;
         const { registeredCommands } = this;
 
-        if (body) console.log(+new Date().toISOString(), body);
+        if (body) console.log(new Date().toISOString(), body);
 
         if (!body.hasOwnProperty('token') && body.token !== VERIFICATION_TOKEN) return res.status(401).send();
 
