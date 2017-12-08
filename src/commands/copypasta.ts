@@ -96,7 +96,7 @@ export class Copypasta {
             text:'NO COPYPASTA M8 WTF'
         };
 
-        const key = Object.keys(this.copypastas).length;
+        const key = Object.keys(this.copypastas).reverse()[0] + 1;
 
         this.copypastas[key] = { ...event, copypasta };
 
