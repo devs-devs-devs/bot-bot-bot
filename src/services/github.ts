@@ -32,7 +32,7 @@ export default class Github {
 
         Reply(null, null, '', {
             channel:'cp',
-            text:':wheelchair: Uh oh, reticulating splines :robot_face:',
+            text:':wheelchair: Uh oh, reticulating splines (someones pushed new code, restarting) :robot_face:',
             attachments:req.body.commits.map((commit: any) => {
                 return {
                     title: commit.message,
@@ -57,12 +57,8 @@ export default class Github {
             ].forEach(cmd => {
                 childProcess.execSync(`cd /home/slack/bot-bot-bot && ${cmd}`);
             });
-        }, 5000);
+        }, 1000);
 
     }
-
-
+    
 }
-
-// git pull && npm run build && cp .env dist/ && forever restartall
-
