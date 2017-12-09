@@ -13,7 +13,7 @@ export default class Github {
 
         Reply(null, null, '', {
             channel:'cp',
-            text:'BOT BOT BOT Back Online :nerd:'
+            text:'BOT BOT BOT Back Online :nerd_face:'
         });
 
     }
