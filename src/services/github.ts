@@ -32,7 +32,20 @@ export default class Github {
 
         Reply(null, null, '', {
             channel:'cp',
-            text:':wheelchair: Uh oh, reticulating splines :robot_face:'
+            text:':wheelchair: Uh oh, reticulating splines :robot_face:',
+            attachments:req.body.commits.map((commit: any) => {
+                return {
+                    title: commit.message,
+                    title_link: commit.url,
+                    fields:[
+                        {
+                            title:'Author',
+                            value:commit.author.username,
+                            short:true
+                        }
+                    ]
+                }
+            })
         });
 
         setTimeout(() => {
