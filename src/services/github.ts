@@ -25,6 +25,7 @@ export default class Github {
         const computedSignature = `sha1=${crypto.createHmac("sha1", GITHUB_SECRET).update(payload).digest("hex")}`;
 
         console.log('');
+        console.log(req.headers);
         console.log(signature);
         console.log(computedSignature);
 
