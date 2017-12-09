@@ -29,6 +29,8 @@ export default class BotBotBot {
 
         app.all('/', this.parseHook.bind(this));
 
+        new Github(app);
+
     }
 
     registerCommand(command: any, app: Application) {
