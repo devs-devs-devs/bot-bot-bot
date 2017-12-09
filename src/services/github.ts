@@ -13,7 +13,7 @@ export default class Github {
 
         Reply(null, null, '', {
             channel:'cp',
-            text:'GITHUB THING LOADED'
+            text:'BOT BOT BOT Back Online :nerd:'
         });
 
     }
@@ -28,9 +28,11 @@ export default class Github {
 
         if (!secureHook) return res.status(401).send('Unsecure');
 
+        res.status(200).send('OK');
+
         Reply(null, null, '', {
             channel:'cp',
-            text:'GITHUB THING HOOKED'
+            text:':wheelchair: Uh oh, reticulating splines :robot_face:'
         });
 
         [
