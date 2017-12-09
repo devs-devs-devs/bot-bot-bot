@@ -21,10 +21,10 @@ export default class Github {
     parsePayload(req: Request, res: Response) {
 
         const payload = JSON.stringify(req.body);
-        const signature = req.get('HTTP_X_HUB_SIGNATURE');
+        const signature = req.get('HTTP_X_HUB_SIGNATURE') || '';
         const computedSignature = `sha1=${crypto.createHmac("sha1", GITHUB_SECRET).update(payload).digest("hex")}`;
 
-        const secureHook = crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(computedSignature));
+        const secureHook = crypto.timingSafeEqual(, Buffer.from(computedSignature));
 
         if (!secureHook) return res.status(401).send('Unsecure');
 
