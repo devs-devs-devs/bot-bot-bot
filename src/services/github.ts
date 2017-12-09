@@ -24,6 +24,10 @@ export default class Github {
         const signature = req.get('HTTP_X_HUB_SIGNATURE') || '';
         const computedSignature = `sha1=${crypto.createHmac("sha1", GITHUB_SECRET).update(payload).digest("hex")}`;
 
+        console.log('');
+        console.log(signature);
+        console.log(computedSignature);
+
         const secureHook = crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(computedSignature));
 
         if (!secureHook) return res.status(401).send('Unsecure');
