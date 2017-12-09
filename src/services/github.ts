@@ -3,7 +3,7 @@ import Reply from './reply';
 import childProcess = require('child_process');
 import crypto = require('crypto');
 
-const { GITHUB_SECRET } = process.env;
+let GITHUB_SECRET = process.env.GITHUB_SECRET || '';
 
 export default class Github {
 
