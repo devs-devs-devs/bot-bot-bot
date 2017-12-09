@@ -35,14 +35,16 @@ export default class Github {
             text:':wheelchair: Uh oh, reticulating splines :robot_face:'
         });
 
-        [
-            '/usr/bin/git pull',
-            '/usr/local/bin/npm run build',
-            'cp .env dist/',
-            '/usr/local/bin/forever restartall'
-        ].forEach(cmd => {
-            childProcess.execSync(`cd /home/slack/bot-bot-bot && ${cmd}`);
-        });
+        setTimeout(() => {
+            [
+                '/usr/bin/git pull',
+                '/usr/local/bin/npm run build',
+                'cp .env dist/',
+                '/usr/local/bin/forever restartall'
+            ].forEach(cmd => {
+                childProcess.execSync(`cd /home/slack/bot-bot-bot && ${cmd}`);
+            });
+        }, 5000);
 
     }
 
