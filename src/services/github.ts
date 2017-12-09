@@ -21,13 +21,8 @@ export default class Github {
     parsePayload(req: Request, res: Response) {
 
         const payload = JSON.stringify(req.body);
-        const signature = req.get('HTTP_X_HUB_SIGNATURE') || '';
+        const signature = req.get('x-hub-signature') || '';
         const computedSignature = `sha1=${crypto.createHmac("sha1", GITHUB_SECRET).update(payload).digest("hex")}`;
-
-        console.log('');
-        console.log(req.headers);
-        console.log(signature);
-        console.log(computedSignature);
 
         const secureHook = crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(computedSignature));
 
@@ -36,6 +31,15 @@ export default class Github {
         Reply(null, null, '', {
             channel:'cp',
             text:'GITHUB THING HOOKED'
+        });
+
+        [
+            '/usr/bin/git pull',
+            '/usr/local/bin/npm run build',
+            'cp .env dist/',
+            '/usr/local/bin/forever restartall'
+        ].forEach(cmd => {
+            childProcess.execSync(`cd /home/slack/bot-bot-bot && ${cmd}`);
         });
 
     }
