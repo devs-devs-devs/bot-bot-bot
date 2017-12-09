@@ -9,7 +9,7 @@ export default class Github {
 
     constructor(app: Application) {
 
-        app.get('/github', this.parsePayload.bind(this));
+        app.post('/github', this.parsePayload.bind(this));
 
         Reply(null, null, '', {
             channel:'cp',
