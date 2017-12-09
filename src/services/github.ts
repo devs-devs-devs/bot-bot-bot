@@ -39,3 +39,4 @@ export default class Github {
 }
 
 // git pull && npm run build && cp .env dist/ && forever restartall
+
