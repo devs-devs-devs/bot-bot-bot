@@ -4,6 +4,7 @@ import Data from '../services/data';
 import Reply from '../services/reply';
 // import Settings from '../services/settings';
 import Users from '../services/users';
+import Github from '../services/github';
 
 import { HelloWorld } from './hello-world';
 import { Copypasta } from './copypasta';

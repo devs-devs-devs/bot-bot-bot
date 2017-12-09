@@ -2,15 +2,18 @@ import agent = require('superagent');
 
 import Settings from './settings';
 
-export default function Reply(req: any, res: any, fullText: string, json: object) {
+export default function Reply(req: any, res: any, fullText: string, json: any) {
 
-    res.status(200).send();
+    let channel;
 
-    const { event } = req.body;
+    if (req && res) {
+        res.status(200).send();
+        channel = req.body.event.channel;
+    }
 
     const payload = {
         ...Settings.defaultMessage,
-        channel:event.channel,
+        channel,
         ...json
     };
 
