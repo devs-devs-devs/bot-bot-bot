@@ -79,11 +79,9 @@ export class Trigger {
         const text = event.text||'';
         const triggers = shuffle(text.split(' '));
 
-        while (true) {
+        while (triggers.length) {
 
             const trigger = triggers.pop();
-
-            console.log(this);
 
             if (trigger && dataTriggers[trigger] && dataTriggers[trigger].length) {
 
