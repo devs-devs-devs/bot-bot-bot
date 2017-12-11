@@ -54,7 +54,7 @@ export default class BotBotBot {
         const { body } = req;
         const { registeredCommands } = this;
 
-        if (body) console.log(new Date().toISOString(), body);
+        if (body) console.log('BODY', new Date().toISOString(), body);
 
         if (!body.hasOwnProperty('token') && body.token !== VERIFICATION_TOKEN) return res.status(401).send();
 
@@ -79,7 +79,7 @@ export default class BotBotBot {
         }
 
         // Catch all triggers
-        console.log(new Date().toISOString(), 'Trigger scan thing');
+        console.log('CATCH', new Date().toISOString(), 'Trigger scan thing', body.event.text);
         return this.triggerScan(req,res,body.event);
 
     }
