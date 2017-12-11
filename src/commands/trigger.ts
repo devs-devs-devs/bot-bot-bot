@@ -1,5 +1,6 @@
 import Data from '../services/data';
 import Reply from '../services/reply';
+import { Request, Response } from 'express';
 
 function shuffle(a: any) {
     a = a || [];
@@ -64,7 +65,9 @@ export class Trigger {
         }
     }
 
-    scan(event: any) {
+    scan(req: Request, res: Response, event: any) {
+
+        res.status(200).send('ok')
 
         console.log('Scanning', event.text);
 

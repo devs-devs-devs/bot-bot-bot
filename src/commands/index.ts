@@ -78,7 +78,7 @@ export default class BotBotBot {
 
             // Catch all triggers
             console.log(new Date().toISOString(), 'Trigger scan thing');
-            return this.triggerScan(body.event);
+            return this.triggerScan(req,res,body.event);
 
         }
 
