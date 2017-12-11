@@ -70,15 +70,15 @@ export default class BotBotBot {
             let trigger = fullText.split(' ', 1)[0];
             let params = fullText.substring(fullText.indexOf(' ')).trim();
 
-            if (trigger[0] !== TRIGGER_PREFIX) return res.status(200).send();
-
-            const triggerReply = registeredCommands[trigger.substring((1))];
-
-            if (triggerReply) return Reply(req, res, fullText, triggerReply.reply(params, body.event));
+            if (trigger[0] === TRIGGER_PREFIX) {
+                const triggerReply = registeredCommands[trigger.substring((1))];
+                if (triggerReply) return Reply(req, res, fullText, triggerReply.reply(params, body.event));
+            }
 
         }
 
         // Catch all triggers
+        res.status(200).send('ok');
         console.log('CATCH', new Date().toISOString(), 'Trigger scan thing', body.event.text);
         return this.triggerScan(req,res,body.event);
 

@@ -72,7 +72,7 @@ export class Trigger {
 
     scan(req: Request, res: Response, event: any) {
 
-        res.status(200).send('ok')
+
 
         console.log('Scanning', event.text);
 
