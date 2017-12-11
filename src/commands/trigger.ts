@@ -14,7 +14,7 @@ function shuffle(a: any) {
 export class Trigger {
 
     private commands: object = ['t','trigger'];
-    private triggers: any = {};
+    public triggers: any = {};
 
     constructor() {
         console.log(this.commands, 'loaded');
@@ -81,7 +81,9 @@ export class Trigger {
 
             const trigger = triggers.pop();
 
-            if (trigger && this.triggers[trigger].length) {
+            console.log(this);
+
+            if (trigger && this.triggers[trigger] && this.triggers[trigger].length) {
 
                 const responses = this.triggers[trigger];
 
