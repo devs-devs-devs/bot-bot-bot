@@ -66,6 +66,8 @@ export class Trigger {
 
     scan(event: any) {
 
+        console.log('Scanning', event.text);
+
         const text = event.text||'';
         const triggers = shuffle(text.split(' '))[0];
 
@@ -81,10 +83,9 @@ export class Trigger {
                     Reply(null, null, '', {
                         channel:event.channel,
                         text:response
-                    })
+                    });
+                    break;
                 }
-
-                break;
 
             }
 
