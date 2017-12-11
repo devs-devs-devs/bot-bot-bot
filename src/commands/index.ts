@@ -75,12 +75,13 @@ export default class BotBotBot {
                 if (triggerReply) return Reply(req, res, fullText, triggerReply.reply(params, body.event));
             }
 
+            // Catch all triggers
+            console.log('CATCH', new Date().toISOString(), 'Trigger scan thing', body.event.text);
+            this.triggerScan(req,res,body.event);
+
         }
 
-        // Catch all triggers
         res.status(200).send('ok');
-        console.log('CATCH', new Date().toISOString(), 'Trigger scan thing', body.event.text);
-        return this.triggerScan(req,res,body.event);
 
     }
 
