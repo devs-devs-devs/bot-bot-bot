@@ -76,13 +76,11 @@ export default class BotBotBot {
 
             if (triggerReply) return Reply(req, res, fullText, triggerReply.reply(params, body.event));
 
-            // Catch all triggers
-            console.log(new Date().toISOString(), 'Trigger scan thing');
-            return this.triggerScan(req,res,body.event);
-
         }
 
-        return res.status(404).send('Command not found');
+        // Catch all triggers
+        console.log(new Date().toISOString(), 'Trigger scan thing');
+        return this.triggerScan(req,res,body.event);
 
     }
 
