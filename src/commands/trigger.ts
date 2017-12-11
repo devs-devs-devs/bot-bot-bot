@@ -85,7 +85,7 @@ export class Trigger {
 
             if (trigger && dataTriggers[trigger] && dataTriggers[trigger].length) {
 
-                const responses = this.triggers[trigger];
+                const responses = dataTriggers[trigger];
 
                 const response = shuffle(responses)[0];
 
