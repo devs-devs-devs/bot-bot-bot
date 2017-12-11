@@ -69,7 +69,7 @@ export class Trigger {
         console.log('Scanning', event.text);
 
         const text = event.text||'';
-        const triggers = shuffle(text.split(' '))[0];
+        const triggers = shuffle(text.split(' '));
 
         while (true) {
 
