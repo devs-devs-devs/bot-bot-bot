@@ -14,14 +14,14 @@ function shuffle(a: any) {
 export class Trigger {
 
     private commands: object = ['t','trigger'];
-    private data: any = {};
+    private triggers: any = {};
 
     constructor() {
         console.log(this.commands, 'loaded');
         const data = Data.namespace('trigger');
         if (!data.hasOwnProperty('triggers')) data.triggers = {};
-        this.data = data.triggers;
-        this.data['bot-bot-bot'] = [
+        this.triggers = data.triggers;
+        this.triggers['bot-bot-bot'] = [
             'fuck off you mug',
             'are you mugging me off in front of my friends?',
             'oi lads who remembers that time Lil Funnel archived general, twat'
@@ -54,9 +54,9 @@ export class Trigger {
             text:'NO TRIGGER OR PHRASE M8 WTF'
         }
 
-        if (!this.data[trigger]) this.data[trigger] = [];
+        if (!this.triggers[trigger]) this.triggers[trigger] = [];
 
-        this.data[trigger].push(phrase);
+        this.triggers[trigger].push(phrase);
 
         return {
             text:`Added \`${phrase}\` as a response to \`${trigger}\``
@@ -72,8 +72,6 @@ export class Trigger {
 
     scan(req: Request, res: Response, event: any) {
 
-
-
         console.log('Scanning', event.text);
 
         const text = event.text||'';
@@ -83,9 +81,11 @@ export class Trigger {
 
             const trigger = triggers.pop();
 
-            if (trigger) {
+            if (trigger && this.triggers[trigger].length) {
 
-                const response = shuffle(this.data[trigger] || [])[0];
+                const responses = this.triggers[trigger];
+
+                const response = shuffle(responses)[0];
 
                 if (response) {
                     Reply(null, null, '', {
