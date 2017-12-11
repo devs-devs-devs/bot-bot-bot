@@ -8,12 +8,14 @@ import Github from '../services/github';
 
 import { HelloWorld } from './hello-world';
 import { Copypasta } from './copypasta';
+import { Trigger } from './trigger';
 
 const { VERIFICATION_TOKEN, TRIGGER_PREFIX, BOT_NAME } = process.env;
 
 export default class BotBotBot {
 
     private registeredCommands: any = {};
+    private triggerScan: any;
 
     constructor(app: Application) {
 
@@ -30,6 +32,9 @@ export default class BotBotBot {
         app.all('/', this.parseHook.bind(this));
 
         new Github(app);
+        const trigger = new Trigger();
+
+        this.triggerScan = trigger.scan;
 
     }
 
@@ -71,7 +76,8 @@ export default class BotBotBot {
 
             if (triggerReply) return Reply(req, res, fullText, triggerReply.reply(params, body.event));
 
-
+            // Catch all triggers
+            return this.triggerScan(body.event);
 
         }
 
