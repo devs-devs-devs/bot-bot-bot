@@ -30,6 +30,17 @@ export default class Github {
 
         res.status(200).send('OK');
 
+        setTimeout(() => {
+            [
+                '/usr/bin/git pull',
+                '/usr/local/bin/npm run build',
+                'cp .env dist/',
+                '/usr/local/bin/forever restartall'
+            ].forEach(cmd => {
+                childProcess.execSync(`cd /home/slack/bot-bot-bot && ${cmd}`);
+            });
+        }, 5000);
+
         Reply(null, null, '', {
             channel:'cp',
             text:':wheelchair: Uh oh, reticulating splines (someones pushed new code, restarting) :robot_face:',
@@ -47,17 +58,6 @@ export default class Github {
                 }
             })
         });
-
-        setTimeout(() => {
-            [
-                '/usr/bin/git pull',
-                '/usr/local/bin/npm run build',
-                'cp .env dist/',
-                '/usr/local/bin/forever restartall'
-            ].forEach(cmd => {
-                childProcess.execSync(`cd /home/slack/bot-bot-bot && ${cmd}`);
-            });
-        }, 5000);
 
     }
 
