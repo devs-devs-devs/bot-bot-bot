@@ -22,7 +22,7 @@ class Data {
         const data = JSON.parse(fs.readFileSync(Settings.dataFilePath).toString());
         this.data = data;
 
-        if (data.copypasta.copypastas.hasOwnProperty('length')) {
+        if (data.copypasta && data.copypasta.copypastas.hasOwnProperty('length')) {
             const copypastas = [...data.copypasta.copypastas];
             data.copypasta.copypastas = {};
             copypastas.forEach((copypasta,key) => {
