@@ -72,6 +72,8 @@ export class Trigger {
 
     scan(req: Request, res: Response, event: any) {
 
+        const dataTriggers = Data.namespace('trigger').triggers;
+
         console.log('Scanning', event.text);
 
         const text = event.text||'';
@@ -83,7 +85,7 @@ export class Trigger {
 
             console.log(this);
 
-            if (trigger && this.triggers[trigger] && this.triggers[trigger].length) {
+            if (trigger && dataTriggers[trigger] && dataTriggers[trigger].length) {
 
                 const responses = this.triggers[trigger];
 
