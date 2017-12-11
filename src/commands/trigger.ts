@@ -67,22 +67,30 @@ export class Trigger {
     scan(event: any) {
 
         const text = event.text||'';
-        const trigger = shuffle(text.split(' '))[0];
+        const triggers = shuffle(text.split(' '))[0];
 
-        if (trigger) {
+        while (true) {
 
-            const response = shuffle(this.data[trigger]||[])[0];
+            const trigger = triggers.pop();
 
-            if (response) {
-                Reply(null, null, '', {
-                    channel:event.channel,
-                    text:response
-                })
+            if (trigger) {
+
+                const response = shuffle(this.data[trigger]||[])[0];
+
+                if (response) {
+                    Reply(null, null, '', {
+                        channel:event.channel,
+                        text:response
+                    })
+                }
+
+                break;
+
             }
 
-        } else {
-            // No trigger
         }
+
+
 
     }
 
