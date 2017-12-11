@@ -14,13 +14,18 @@ function shuffle(a: any) {
 export class Trigger {
 
     private commands: object = ['t','trigger'];
-    private data: any;
+    private data: any = {};
 
     constructor() {
         console.log(this.commands, 'loaded');
         const data = Data.namespace('trigger');
         if (!data.hasOwnProperty('triggers')) data.triggers = {};
         this.data = data.triggers;
+        this.data['bot-bot-bot'] = [
+            'fuck off you mug',
+            'are you mugging me off in front of my friends?',
+            'oi lads who remembers that time Lil Funnel archived general, twat'
+        ]
     }
 
     reply(params: string, event: object) {
@@ -80,7 +85,7 @@ export class Trigger {
 
             if (trigger) {
 
-                const response = shuffle(this.data[trigger]||[])[0];
+                const response = shuffle(this.data[trigger] || [])[0];
 
                 if (response) {
                     Reply(null, null, '', {
