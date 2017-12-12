@@ -1,6 +1,7 @@
 import Data from '../services/data';
 import Reply from '../services/reply';
 import { Request, Response } from 'express';
+import Settings from '../services/settings';
 
 function shuffle(a: any) {
     a = a || [];
@@ -15,6 +16,7 @@ export class Trigger {
 
     private commands: object = ['t','trigger'];
     public triggers: any = {};
+    private lastTrigger: number = 0;
 
     constructor() {
         console.log(this.commands, 'loaded');
@@ -74,29 +76,32 @@ export class Trigger {
 
     scan(req: Request, res: Response, event: any) {
 
-        const dataTriggers = Data.namespace('trigger').triggers;
+        if ((+new Date() - this.lastTrigger) > Settings.triggerReplyInterval || (Math.floor(Math.random() * 100) + 1) > Settings.triggerReplyOutOf100) {
 
-        console.log('Scanning', event.text);
+            const dataTriggers = Data.namespace('trigger').triggers;
 
-        const text = (event.text||'').toLowerCase();
-        const triggers = shuffle(text.split(' '));
+            const text = (event.text||'').toLowerCase();
+            const triggers = shuffle(text.split(' '));
 
-        while (triggers.length) {
+            while (triggers.length) {
 
-            const trigger = triggers.pop();
+                const trigger = triggers.pop();
 
-            if (trigger && dataTriggers[trigger] && dataTriggers[trigger].length) {
+                if (trigger && dataTriggers[trigger] && dataTriggers[trigger].length) {
 
-                const responses = dataTriggers[trigger];
+                    const responses = dataTriggers[trigger];
 
-                const response = shuffle(responses)[0];
+                    const response = shuffle(responses)[0];
 
-                if (response) {
-                    Reply(null, null, '', {
-                        channel:event.channel,
-                        text:response
-                    });
-                    break;
+                    if (response) {
+                        Reply(null, null, '', {
+                            channel:event.channel,
+                            text:response
+                        });
+                        this.lastTrigger = +new Date();
+                        break;
+                    }
+
                 }
 
             }
