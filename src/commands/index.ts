@@ -21,7 +21,8 @@ export default class BotBotBot {
 
         [
             HelloWorld,
-            Copypasta
+            Copypasta,
+            Trigger
         ].forEach(command => {
             this.registerCommand(command, app);
         });
@@ -32,9 +33,6 @@ export default class BotBotBot {
         app.all('/', this.parseHook.bind(this));
 
         new Github(app);
-        const trigger = new Trigger();
-
-        this.triggerScan = trigger.scan;
 
     }
 
@@ -77,7 +75,7 @@ export default class BotBotBot {
 
             // Catch all triggers
             console.log('CATCH', new Date().toISOString(), 'Trigger scan thing', body.event.text);
-            this.triggerScan(req,res,body.event);
+            this.registeredCommands.trigger.scan(req,res,body.event);
 
         }
 

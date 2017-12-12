@@ -43,6 +43,8 @@ export class Trigger {
 
     addAction(response: string, event: any) {
 
+        console.log(this.triggers);
+
         if (!response) return {
             text:'NO RESPONSE M8 WTF'
         };
@@ -76,7 +78,7 @@ export class Trigger {
 
         console.log('Scanning', event.text);
 
-        const text = event.text||'';
+        const text = (event.text||'').toLowerCase();
         const triggers = shuffle(text.split(' '));
 
         while (triggers.length) {
