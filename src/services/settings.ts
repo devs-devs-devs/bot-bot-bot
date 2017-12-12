@@ -16,7 +16,7 @@ class Settings {
     public usersInterval= (5 * 60 * 1000);
 
     public triggerReplyInterval = (60 * 1000);
-    public triggerReplyOutOf100 = 60;
+    public triggerReplyOutOf100 = 80;
 
     public dataSavePath: string = path.resolve(process.cwd(), '../');
     public dataFilePath: string = `${this.dataSavePath}/bot-data.json`;
