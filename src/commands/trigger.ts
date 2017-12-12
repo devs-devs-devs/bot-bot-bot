@@ -51,7 +51,7 @@ export class Trigger {
             text:'NO RESPONSE M8 WTF'
         };
 
-        const trigger = response.substring(0, response.indexOf(' ')).trim();
+        const trigger = response.substring(0, response.indexOf(' ')).trim().toLowerCase();
         const phrase = response.substring(response.indexOf(' ')).trim();
 
         if (!trigger || !phrase)return {
