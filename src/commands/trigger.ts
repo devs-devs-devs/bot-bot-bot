@@ -76,7 +76,13 @@ export class Trigger {
 
     scan(req: Request, res: Response, event: any) {
 
-        if ((+new Date() - this.lastTrigger) > Settings.triggerReplyInterval || (Math.floor(Math.random() * 100) + 1) > Settings.triggerReplyOutOf100) {
+        const timeDiffInSpeak = (+new Date() - this.lastTrigger);
+        const rollTheDice = (Math.floor(Math.random() * 100) + 1);
+        const { triggerReplyInterval, triggerReplyOutOf100 } = Settings;
+
+        console.log({ timeDiffInSpeak, triggerReplyInterval, rollTheDice, triggerReplyOutOf100 }, timeDiffInSpeak > triggerReplyInterval, rollTheDice > triggerReplyOutOf100);
+
+        if (timeDiffInSpeak > triggerReplyInterval || rollTheDice > triggerReplyOutOf100) {
 
             const dataTriggers = Data.namespace('trigger').triggers;
 
