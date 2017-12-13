@@ -35,19 +35,19 @@ export default class Github {
         const gitmsg = JSON.stringify({
             channel:REPORT_CHANNEL,
             text:`New code detected for <@U87U6ES12>. Please wait while we start ${shuffle(jargon)[0].toLowerCase()}...`,
-            // attachments:(req.body.commits||[]).map((commit: any) => {
-            //     return {
-            //         title: commit.message,
-            //         title_link: commit.url,
-            //         fields:[
-            //             {
-            //                 title:'Author',
-            //                 value:commit.author.username,
-            //                 short:true
-            //             }
-            //         ]
-            //     }
-            // })
+            attachments:(req.body.commits||[]).map((commit: any) => {
+                return {
+                    title: commit.message,
+                    title_link: commit.url,
+                    fields:[
+                        {
+                            title:'Author',
+                            value:`${commit.author.name} <${commit.author.username}>`,
+                            short:true
+                        }
+                    ]
+                }
+            })
         }, null, 4);
 
         Logger.log(this.serviceName, gitmsg);
