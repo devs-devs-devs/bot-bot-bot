@@ -7,6 +7,8 @@ import jargon from '../utils/jargon';
 import { shuffle } from '../utils/shuffle';
 import Reply from './reply';
 
+const { REPORT_CHANNEL } = process.env;
+
 const GITHUB_SECRET = process.env.GITHUB_SECRET || '';
 
 export default class Github {
@@ -31,7 +33,7 @@ export default class Github {
         res.status(200).send('OK');
 
         const gitmsg = JSON.stringify({
-            channel:'cp',
+            channel:REPORT_CHANNEL,
             text:`New code detected for <@u87u6es12>. Please wait while we ${shuffle(jargon)[0]}...`,
             attachments:(req.body.commits||[]).map((commit: any) => {
                 return {

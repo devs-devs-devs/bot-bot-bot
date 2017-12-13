@@ -14,7 +14,7 @@ import { Copypasta } from './copypasta';
 import { SlackMessage } from '../interfaces/slack';
 import Reply from '../services/reply';
 
-const { VERIFICATION_TOKEN, BOT_NAME, TRIGGER_PREFIX } = process.env;
+const { VERIFICATION_TOKEN, BOT_NAME, TRIGGER_PREFIX, REPORT_CHANNEL } = process.env;
 
 export default class BotBotBot {
 
@@ -40,7 +40,7 @@ export default class BotBotBot {
         Channels.autoUpdateChannels();
         this.registerCommands();
         Reply({
-            channel:'cp',
+            channel:REPORT_CHANNEL,
             text:'BOT BOT BOT BACK BACK BACK ON ON LINE'
         });
     }
