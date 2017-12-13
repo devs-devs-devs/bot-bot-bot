@@ -58,6 +58,9 @@ export default class Github {
 
         this.triggerReload();
 
+
+        
+
     }
 
     triggerReload() {
