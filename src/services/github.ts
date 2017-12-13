@@ -36,7 +36,7 @@ export default class Github {
         })));
 
 
-        console.log(JSON.parse(JSON.stringify({
+        console.log(JSON.stringify({
             channel:'cp',
             text:shuffle(jargon)[0],
             attachments:(req.body.commits||[]).map((commit: any) => {
@@ -52,8 +52,8 @@ export default class Github {
                     ]
                 }
             })
-        })));
-        
+        }));
+
         setTimeout(() => {
             [
                 '/usr/bin/git pull',
