@@ -39,13 +39,7 @@ export default class Github {
                 return {
                     title: commit.message,
                     title_link: commit.url,
-                    fields:[
-                        {
-                            title:'Author',
-                            value:`${commit.author.name} <${commit.author.username}>`,
-                            short:true
-                        }
-                    ]
+                    text:'Commit by: `${commit.author.name} <${commit.author.username}>`'
                 }
             }), null, 4)
         };
