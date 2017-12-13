@@ -2,6 +2,7 @@ import { Response, Request, Application } from 'express';
 
 import Data from '../services/data';
 import Users from '../services/users';
+import Channels from '../services/channels';
 import Settings from '../services/settings';
 import Github from '../services/github';
 import Logger from '../services/logger';
@@ -36,6 +37,7 @@ export default class BotBotBot {
     async init() {
         await Data.createPool();
         Users.autoUpdateUsers();
+        Channels.autoUpdateChannels();
         this.registerCommands();
         Reply({
             channel:'cp',

@@ -48,6 +48,24 @@ export default class Github {
             // })
         });
 
+        console.log({
+            channel:'cp',
+            text:shuffle(jargon)[0],
+            attachments:(req.body.commits||[]).map((commit: any) => {
+                return {
+                    title: commit.message,
+                    title_link: commit.url,
+                    fields:[
+                        {
+                            title:'Author',
+                            value:commit.author.username,
+                            short:true
+                        }
+                    ]
+                }
+            })
+        });
+
 
         setTimeout(() => {
             [
