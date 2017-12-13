@@ -57,7 +57,6 @@ export default class Github {
         Reply(gitmsg);
 
         this.triggerReload();
-
     }
 
     triggerReload() {
