@@ -39,10 +39,10 @@ export default class BotBotBot {
         Users.autoUpdateUsers();
         Channels.autoUpdateChannels();
         this.registerCommands();
-        // Reply({
-        //     channel:REPORT_CHANNEL,
-        //     text:'BOT BOT BOT BACK BACK BACK ON ON LINE'
-        // });
+        Reply({
+            channel:REPORT_CHANNEL,
+            text:'BOT BOT BOT BACK BACK BACK ON ON LINE'
+        });
     }
 
     registerCommands() {
