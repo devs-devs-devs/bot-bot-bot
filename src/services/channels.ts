@@ -83,3 +83,4 @@ class Channels {
 }
 
 export default new Channels();
+
