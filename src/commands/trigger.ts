@@ -41,9 +41,9 @@ export class Trigger extends Command {
     }
 
     async addAction(params: string, event: SlackEvent) {
-        const splitParams = params.toLowerCase().split(' ');
+        const splitParams = params.split(' ');
         if (splitParams.length < 2) return;
-        const word = splitParams.shift();
+        const word = (splitParams.shift()||'').toLowerCase();
         const phrase = splitParams.join(' ');
 
         const insertResult = await Data.pool.query('INSERT INTO `triggers` (`trigger`, `phrase`, `user`) VALUES(?, ?, ?)', [word, phrase, event.user]);
