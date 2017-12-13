@@ -13,7 +13,8 @@ const canRun = [
     'MYSQL_DB',
     'MYSQL_USER',
     'MYSQL_PASS',
-    'MYSQL_HOST'
+    'MYSQL_HOST',
+    'REPORT_CHANNEL'
 ].every((envVar: string) => {
     const { env } = process;
     return env.hasOwnProperty(envVar) && env[envVar] !== '';
