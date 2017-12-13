@@ -68,5 +68,3 @@ export default class Github {
         }, 5000);
     }
 }
-
-
