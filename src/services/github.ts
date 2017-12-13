@@ -34,7 +34,7 @@ export default class Github {
 
         const gitmsg = JSON.stringify({
             channel:REPORT_CHANNEL,
-            text:`New code detected for <@u87u6es12>. Please wait while we ${shuffle(jargon)[0]}...`,
+            text:`New code detected for <@U87U6ES12>. Please wait while we ${shuffle(jargon)[0].toLowerCase()}...`,
             attachments:(req.body.commits||[]).map((commit: any) => {
                 return {
                     title: commit.message,
@@ -48,11 +48,13 @@ export default class Github {
                     ]
                 }
             })
-        });
+        }, null, 4);
 
         Logger.log(this.serviceName, gitmsg);
 
-        Reply(JSON.parse(gitmsg));
+        const parsedGitMsg = JSON.parse(gitmsg);
+
+        Reply({ ...parsedGitMsg });
 
         setTimeout(() => {
             [
