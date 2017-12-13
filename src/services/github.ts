@@ -32,13 +32,7 @@ export default class Github {
 
         Reply(JSON.parse(JSON.stringify({
             channel:'cp',
-            text:shuffle(jargon)[0],
-        })));
-
-
-        console.log(JSON.stringify({
-            channel:'cp',
-            text:shuffle(jargon)[0],
+            text:`New code detected for <@u87u6es12>. Please wait while we ${shuffle(jargon)[0]}...`,
             attachments:(req.body.commits||[]).map((commit: any) => {
                 return {
                     title: commit.message,
@@ -52,9 +46,7 @@ export default class Github {
                     ]
                 }
             })
-        }));
-
-        //
+        })));
 
         setTimeout(() => {
             [
