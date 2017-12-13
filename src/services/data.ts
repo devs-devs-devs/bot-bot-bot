@@ -1,62 +1,28 @@
-import fs = require('fs');
+import { Pool, createPool } from 'mysql2/promise';
+import Logger from './logger';
+import chalk from 'chalk';
 
-import Settings from './settings';
+const { MYSQL_DB, MYSQL_USER, MYSQL_PASS, MYSQL_HOST } = process.env;
 
 class Data {
 
-    private data: any;
+    public pool: Pool;
+    private serviceName: any = chalk.yellow('Data:');
 
     constructor() {
-
-        const { dataFilePath, dataSavePath } = Settings;
-
-        if (!fs.existsSync(dataSavePath)) fs.mkdirSync(dataSavePath);
-        if (!fs.existsSync(dataFilePath)) {
-            this.data = {};
-            this.save();
-        }
-        this.read();
+        Logger.log(this.serviceName, 'service loaded');
     }
 
-    read() {
-        const data = JSON.parse(fs.readFileSync(Settings.dataFilePath).toString());
-        this.data = data;
-
-        if (data.copypasta && data.copypasta.copypastas.hasOwnProperty('length')) {
-            const copypastas = [...data.copypasta.copypastas];
-            data.copypasta.copypastas = {};
-            copypastas.forEach((copypasta,key) => {
-                data.copypasta.copypastas[key] = copypasta;
-            });
-        }
-
-        //Lets fix some shit here
-        console.log();
-    }
-
-    startAutoSave() {
-        console.log('Saving...');
-        fs.writeFile(Settings.dataFilePath, JSON.stringify(this.data, null, 4), () => {
-            console.log('SAVED');
+    async createPool() {
+        this.pool = await createPool({
+            connectionLimit: 10,
+            host: MYSQL_HOST,
+            user: MYSQL_USER,
+            password: MYSQL_PASS,
+            database: MYSQL_DB
         });
-        setTimeout(() => {
-            this.startAutoSave();
-        }, Settings.saveInterval)
-    }
-
-    save() {
-        fs.writeFileSync(Settings.dataFilePath, JSON.stringify(this.data, null, 4));
-    }
-
-    namespace(namespace: string) {
-        if (!this.data[namespace]) {
-            this.data[namespace] = {
-                [namespace]: {
-                    created: new Date()
-                }
-            };
-        }
-        return this.data[namespace];
+        Logger.log(this.serviceName, 'Pool created');
+        return this.pool;
     }
 
 }

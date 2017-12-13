@@ -1,15 +1,16 @@
-import agent = require('superagent');
-
 import Settings from './settings';
+import Logger from './logger';
+import agent = require('superagent');
+import { SlackEvent } from '../interfaces/slack';
+import chalk from 'chalk';
 
-export default function Reply(req: any, res: any, fullText: string, json: any) {
+export default function Reply(json: any, event: SlackEvent) {
+
+    const serviceName = chalk.yellow('Reply:');
 
     let channel;
 
-    if (req && res) {
-        res.status(200).send();
-        channel = req.body.event.channel;
-    }
+    if (event.channel) channel = event.channel;
 
     const payload = {
         ...Settings.defaultMessage,
@@ -21,7 +22,12 @@ export default function Reply(req: any, res: any, fullText: string, json: any) {
         .get('https://slack.com/api/chat.postMessage')
         .query(payload)
         .end((err,res) => {
-            if (err) console.log(err)
+            if (err) {
+                Logger.error(serviceName, 'error', err);
+            } else {
+                const text = payload.text || '';
+                Logger.log(serviceName, 'Responded with', text.toString ? text.toString() : text);
+            }
         });
 
 }

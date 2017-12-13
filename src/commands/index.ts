@@ -1,43 +1,52 @@
-import { Application, Request, Response } from 'express';
+import { Response, Request, Application } from 'express';
 
 import Data from '../services/data';
-import Reply from '../services/reply';
-// import Settings from '../services/settings';
 import Users from '../services/users';
+import Settings from '../services/settings';
 import Github from '../services/github';
+import Logger from '../services/logger';
 
-import { HelloWorld } from './hello-world';
-import { Copypasta } from './copypasta';
+import { default as Command, CommandInterface } from './command';
 import { Trigger } from './trigger';
+import { Copypasta } from './copypasta';
 
-const { VERIFICATION_TOKEN, TRIGGER_PREFIX, BOT_NAME } = process.env;
+import { SlackMessage } from '../interfaces/slack';
+
+const { VERIFICATION_TOKEN, BOT_NAME, TRIGGER_PREFIX } = process.env;
 
 export default class BotBotBot {
 
+    private app: Application;
     private registeredCommands: any = {};
-    private triggerScan: any;
+    private commadsToRegister: any = [
+        Command,
+        Trigger,
+        Copypasta
+    ];
 
     constructor(app: Application) {
-
-        [
-            HelloWorld,
-            Copypasta,
-            Trigger
-        ].forEach(command => {
-            this.registerCommand(command, app);
-        });
-
-        Data.startAutoSave();
-        Users.autoUpdateUsers();
-
+        this.app = app;
+        this.init();
         app.all('/', this.parseHook.bind(this));
-
         new Github(app);
-
     }
 
-    registerCommand(command: any, app: Application) {
-        const instantiatedCommand = new command(app);
+    // Can't have async constructors
+    async init() {
+        await Data.createPool();
+        Users.autoUpdateUsers();
+        this.registerCommands();
+    }
+
+    registerCommands() {
+        this.commadsToRegister.forEach((command: CommandInterface) => {
+            this.registerCommand(command);
+        })
+    }
+
+    // TODO: How do you assign a type here
+    registerCommand(command: any) {
+        const instantiatedCommand = new command(this.app);
         const { registeredCommands } = this;
 
         const { commands } = instantiatedCommand;
@@ -49,37 +58,36 @@ export default class BotBotBot {
     }
 
     parseHook(req: Request, res: Response) {
-        const { body } = req;
+
+        const body = req.body as SlackMessage;
         const { registeredCommands } = this;
 
-        if (body) console.log('BODY', new Date().toISOString(), body);
+        Logger.log('parseHook:body', body);
 
-        if (!body.hasOwnProperty('token') && body.token !== VERIFICATION_TOKEN) return res.status(401).send();
+        // Slack sends a token to prove its authenticity, if it doesn't match, reject
+        if (!body.token || body.token !== VERIFICATION_TOKEN) return res.status(401).send();
 
-        if (body.hasOwnProperty('challenge')) return res.status(200).send(body.challenge);
+        // Sometimes slack sends a challenge to prove we own the URL
+        if (body.challenge) return res.status(200).send(body.challenge);
 
-        if (body.hasOwnProperty('event') && body.event.hasOwnProperty('text')) {
-            if (BOT_NAME === body.event.username) return res.status(200).send();
+        // Everything else from here is kosher
+        res.status(200).send();
 
-            console.log(new Date().toISOString(), body.event.text);
+        if (body.event && body.event.text) {
+            const { event } = body;
 
-            const fullText = body.event.text;
+            if (event.username === BOT_NAME) return;
 
-            let trigger = fullText.split(' ', 1)[0];
-            let params = fullText.substring(fullText.indexOf(' ')).trim();
-
+            let trigger = event.text.split(' ',1)[0];
             if (trigger[0] === TRIGGER_PREFIX) {
-                const triggerReply = registeredCommands[trigger.substring((1))];
-                if (triggerReply) return Reply(req, res, fullText, triggerReply.reply(params, body.event));
+                const triggerCommand = registeredCommands[trigger.substring(1)];
+                if (triggerCommand) return triggerCommand.reply(body);
             }
 
-            // Catch all triggers
-            console.log('CATCH', new Date().toISOString(), 'Trigger scan thing', body.event.text);
-            this.registeredCommands.trigger.scan(req,res,body.event);
+            // Catch All Triggers
+            this.registeredCommands.trigger.scan(body);
 
         }
-
-        res.status(200).send('ok');
 
     }
 

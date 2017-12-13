@@ -1,21 +1,18 @@
-import { Application, Request, Response } from 'express';
-import Reply from './reply';
-import childProcess = require('child_process');
+import { Request, Response, Application } from 'express';
 import crypto = require('crypto');
+import childProcess = require('child_process');
+import Logger from './logger';
+import chalk from 'chalk';
 
-let GITHUB_SECRET = process.env.GITHUB_SECRET || '';
+const GITHUB_SECRET = process.env.GITHUB_SECRET || '';
 
 export default class Github {
 
+    private serviceName: any = chalk.yellow('Github:');
+
     constructor(app: Application) {
-
+        Logger.log(this.serviceName, 'hooks online');
         app.post('/github', this.parsePayload.bind(this));
-
-        Reply(null, null, '', {
-            channel:'cp',
-            text:'BOT BOT BOT Back Online :nerd_face:'
-        });
-
     }
 
     parsePayload(req: Request, res: Response) {
@@ -40,25 +37,5 @@ export default class Github {
                 childProcess.execSync(`cd /home/slack/bot-bot-bot && ${cmd}`);
             });
         }, 5000);
-
-        Reply(null, null, '', {
-            channel:'cp',
-            text:':wheelchair: Uh oh, reticulating splines (someones pushed new code, restarting) :robot_face:',
-            attachments:req.body.commits.map((commit: any) => {
-                return {
-                    title: commit.message,
-                    title_link: commit.url,
-                    fields:[
-                        {
-                            title:'Author',
-                            value:commit.author.username,
-                            short:true
-                        }
-                    ]
-                }
-            })
-        });
-
     }
-
 }

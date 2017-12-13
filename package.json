@@ -4,9 +4,12 @@
   "description": "A fuckin' slack bot mates.",
   "main": "index.js",
   "dependencies": {
+    "@types/mysql2": "github:types/mysql2",
     "body-parser": "^1.18.2",
+    "chalk": "^2.3.0",
     "express": "^4.16.2",
     "forever": "^0.15.3",
+    "mysql2": "^1.5.1",
     "superagent": "^3.8.1"
   },
   "devDependencies": {

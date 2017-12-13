@@ -3,16 +3,32 @@
 require('dotenv').config();
 process.chdir(__dirname);
 
-const { SLACK_TOKEN } = process.env;
+const canRun = [
+    'SLACK_TOKEN',
+    'VERIFICATION_TOKEN',
+    'TRIGGER_PREFIX',
+    'BOT_NAME',
+    'ICON_EMOJI',
+    'GITHUB_SECRET',
+    'MYSQL_DB',
+    'MYSQL_USER',
+    'MYSQL_PASS',
+    'MYSQL_HOST'
+].every((envVar: string) => {
+    const { env } = process;
+    return env.hasOwnProperty(envVar) && env[envVar] !== '';
+});
 
-if (!SLACK_TOKEN) throw 'Please provide a slack token';
+if (!canRun) throw `Please check all the environment variables exist`;
 
 import express = require('express');
 import bodyParser = require('body-parser');
 import BotBotBot from './commands';
+import Logger from './services/logger';
+import chalk from 'chalk';
 
 const app = express();
 app.use(bodyParser.json());
 new BotBotBot(app);
 
-app.listen(3002, console.log.bind(console));
+app.listen(3002, () => Logger.log(chalk.green('Express:'), 'Listening on 3002'));
