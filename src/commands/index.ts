@@ -62,8 +62,6 @@ export default class BotBotBot {
         const body = req.body as SlackMessage;
         const { registeredCommands } = this;
 
-        Logger.log('parseHook:body', body);
-
         // Slack sends a token to prove its authenticity, if it doesn't match, reject
         if (!body.token || body.token !== VERIFICATION_TOKEN) return res.status(401).send();
 
