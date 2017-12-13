@@ -62,7 +62,7 @@ export default class Github {
             ].forEach(cmd => {
                 childProcess.execSync(`cd /home/slack/bot-bot-bot && ${cmd}`);
             });
-        }, 5000);
+        }, 2500);
 
     }
 
