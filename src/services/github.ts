@@ -30,7 +30,7 @@ export default class Github {
 
         res.status(200).send('OK');
 
-        Reply(JSON.parse(JSON.stringify({
+        const gitmsg = JSON.stringify({
             channel:'cp',
             text:`New code detected for <@u87u6es12>. Please wait while we ${shuffle(jargon)[0]}...`,
             attachments:(req.body.commits||[]).map((commit: any) => {
@@ -46,7 +46,11 @@ export default class Github {
                     ]
                 }
             })
-        })));
+        });
+
+        Logger.log(this.serviceName, gitmsg);
+
+        Reply(JSON.parse(gitmsg));
 
         setTimeout(() => {
             [
