@@ -30,26 +30,13 @@ export default class Github {
 
         res.status(200).send('OK');
 
-        Reply({
+        Reply(JSON.parse(JSON.stringify({
             channel:'cp',
             text:shuffle(jargon)[0],
-            // attachments:(req.body.commits||[]).map((commit: any) => {
-            //     return {
-            //         title: commit.message,
-            //         title_link: commit.url,
-            //         fields:[
-            //             {
-            //                 title:'Author',
-            //                 value:commit.author.username,
-            //                 short:true
-            //             }
-            //         ]
-            //     }
-            // })
-        });
-        
+        })));
 
-        console.log({
+
+        console.log(JSON.parse(JSON.stringify({
             channel:'cp',
             text:shuffle(jargon)[0],
             attachments:(req.body.commits||[]).map((commit: any) => {
@@ -65,7 +52,7 @@ export default class Github {
                     ]
                 }
             })
-        });
+        })));
 
 
         setTimeout(() => {
