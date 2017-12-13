@@ -38,8 +38,6 @@ export default class Github {
             attachments:JSON.stringify((req.body.commits||[]).map((commit: any) => {
                 return {
                     title: commit.message,
-                    text:"anyone a lad?",
-                    fallback:"anyone a fallback lad?",
                     title_link: commit.url,
                     fields:[
                         {
