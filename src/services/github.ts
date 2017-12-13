@@ -32,10 +32,10 @@ export default class Github {
 
         res.status(200).send('OK');
 
-        const gitmsg = JSON.stringify({
+        const gitmsg = {
             channel:REPORT_CHANNEL,
             text:`New code detected for <@U87U6ES12>. Please wait while we start ${shuffle(jargon)[0].toLowerCase()}...`,
-            attachments:(req.body.commits||[]).map((commit: any) => {
+            attachments:JSON.stringify((req.body.commits||[]).map((commit: any) => {
                 return {
                     title: commit.message,
                     text:"anyone a lad?",
@@ -49,19 +49,14 @@ export default class Github {
                         }
                     ]
                 }
-            })
-        }, null, 4);
+            }), null, 4)
+        };
 
         Logger.log(this.serviceName, gitmsg);
 
-        const parsedGitMsg = JSON.parse(gitmsg);
-
-        Reply({ ...parsedGitMsg });
+        Reply(gitmsg);
 
         this.triggerReload();
-
-
-
 
     }
 
