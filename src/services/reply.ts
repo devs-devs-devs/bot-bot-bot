@@ -4,13 +4,13 @@ import agent = require('superagent');
 import { SlackEvent } from '../interfaces/slack';
 import chalk from 'chalk';
 
-export default function Reply(json: any, event: SlackEvent) {
+export default function Reply(json: any, event?: SlackEvent) {
 
     const serviceName = chalk.yellow('Reply:');
 
     let channel;
 
-    if (event.channel) channel = event.channel;
+    if (event && event.channel) channel = event.channel;
 
     const payload = {
         ...Settings.defaultMessage,

@@ -11,6 +11,7 @@ import { Trigger } from './trigger';
 import { Copypasta } from './copypasta';
 
 import { SlackMessage } from '../interfaces/slack';
+import Reply from '../services/reply';
 
 const { VERIFICATION_TOKEN, BOT_NAME, TRIGGER_PREFIX } = process.env;
 
@@ -36,6 +37,10 @@ export default class BotBotBot {
         await Data.createPool();
         Users.autoUpdateUsers();
         this.registerCommands();
+        Reply({
+            channel:'cp',
+            text:'BOT BOT BOT BACK BACK BACK ON ON LINE'
+        });
     }
 
     registerCommands() {
