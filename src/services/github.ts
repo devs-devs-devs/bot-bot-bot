@@ -53,8 +53,7 @@ export default class Github {
                 }
             })
         })));
-
-
+        
         setTimeout(() => {
             [
                 '/usr/bin/git pull',
