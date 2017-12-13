@@ -3,6 +3,9 @@ import crypto = require('crypto');
 import childProcess = require('child_process');
 import Logger from './logger';
 import chalk from 'chalk';
+import jargon from '../utils/jargon';
+import { shuffle } from '../utils/shuffle';
+import Reply from './reply';
 
 const GITHUB_SECRET = process.env.GITHUB_SECRET || '';
 
@@ -26,6 +29,24 @@ export default class Github {
         if (!secureHook) return res.status(401).send('Unsecure');
 
         res.status(200).send('OK');
+
+        Reply({
+            channel:'cp',
+            text:shuffle(jargon)[0],
+            attachments:(req.body.commits||[]).map((commit: any) => {
+                return {
+                    title: commit.message,
+                    title_link: commit.url,
+                    fields:[
+                        {
+                            title:'Author',
+                            value:commit.author.username,
+                            short:true
+                        }
+                    ]
+                }
+            })
+        });
 
         setTimeout(() => {
             [
