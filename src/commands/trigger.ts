@@ -49,7 +49,7 @@ export class Trigger extends Command {
         const insertResult = await Data.pool.query('INSERT INTO `triggers` (`trigger`, `phrase`, `user`) VALUES(?, ?, ?)', [word, phrase, event.user]);
         if (insertResult.length) {
             Reply({
-                text:'Added "${phrase}" as a response to *${word}*'
+                text:`Added "${phrase}" as a response to *${word}*`
             }, event);
         } else {
             Reply({
