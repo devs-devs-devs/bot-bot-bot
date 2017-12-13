@@ -38,6 +38,7 @@ export default class Github {
             attachments:(req.body.commits||[]).map((commit: any) => {
                 return {
                     title: commit.message,
+                    text:'anyone a lad?',
                     title_link: commit.url,
                     fields:[
                         {
@@ -59,7 +60,7 @@ export default class Github {
         this.triggerReload();
 
 
-        
+
 
     }
 
