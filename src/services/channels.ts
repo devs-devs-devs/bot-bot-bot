@@ -28,7 +28,7 @@ class Channels {
             .get('https://slack.com/api/channels.list')
             .query(payload)
             .end((err,res) => {
-                console.log(res.body);
+                //console.log(res.body);
                 if (err) {
                     Logger.error(this.serviceName, 'error', err);
                 } else if (res.body.channels) {
@@ -70,7 +70,7 @@ class Channels {
                     });
                     Logger.log(this.serviceName, res.body.channel.name, 'joined');
                 } else {
-                    console.log(res.body);
+                    //console.log(res.body);
                 }
             });
 

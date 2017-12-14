@@ -11,7 +11,7 @@ import { default as Command, CommandInterface } from './command';
 import { Trigger } from './trigger';
 import { Copypasta } from './copypasta';
 import { Emphasis } from './emphasis';
-//import { Quote } from './quote';
+import { Quote } from './quote';
 
 import { SlackMessage } from '../interfaces/slack';
 import Reply from '../services/reply';
@@ -27,7 +27,7 @@ export default class BotBotBot {
         Trigger,
         Copypasta,
         Emphasis,
-        //Quote
+        Quote
     ];
 
     constructor(app: Application) {
@@ -44,10 +44,10 @@ export default class BotBotBot {
         Channels.autoUpdateChannels();
         this.registerCommands();
 
-        // Reply({
-        //     channel:REPORT_CHANNEL,
-        //     text:'BOT BOT BOT BACK BACK BACK ON ON LINE'
-        // });
+        Reply({
+            channel:REPORT_CHANNEL,
+            text:'BOT BOT BOT BACK BACK BACK ON ON LINE'
+        });
     }
 
     registerCommands() {
