@@ -35,7 +35,7 @@ export class Quote extends Command {
         const quote = (data[0] as any)[0];
         quote.quote = quote.quote.toString();
 
-        const user = Users.id(quote.user).name;
+        const user = Users.id(quote.user || quote.author_subname).name;
 
         Reply({
             as_user:false,

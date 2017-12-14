@@ -13,7 +13,7 @@ import { Copypasta } from './copypasta';
 import { Emphasis } from './emphasis';
 import { Quote } from './quote';
 
-import { SlackMessage } from '../interfaces/slack';
+import { SlackEvent, SlackMessage } from '../interfaces/slack';
 import Reply from '../services/reply';
 
 const { VERIFICATION_TOKEN, BOT_NAME, TRIGGER_PREFIX, REPORT_CHANNEL } = process.env;
@@ -103,7 +103,7 @@ export default class BotBotBot {
 
     }
 
-    getText(event) {
+    getText(event: SlackEvent) {
         return event.message && event.message.text ? event.message.text : event.text || '';
     }
 
