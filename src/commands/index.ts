@@ -11,7 +11,7 @@ import { default as Command, CommandInterface } from './command';
 import { Trigger } from './trigger';
 import { Copypasta } from './copypasta';
 import { Emphasis } from './emphasis';
-
+import { Quote } from './quote';
 import { SlackMessage } from '../interfaces/slack';
 import Reply from '../services/reply';
 
@@ -25,7 +25,8 @@ export default class BotBotBot {
         Command,
         Trigger,
         Copypasta,
-        Emphasis
+        Emphasis,
+        Quote
     ];
 
     constructor(app: Application) {
@@ -41,10 +42,11 @@ export default class BotBotBot {
         Users.autoUpdateUsers();
         Channels.autoUpdateChannels();
         this.registerCommands();
-        Reply({
-            channel:REPORT_CHANNEL,
-            text:'BOT BOT BOT BACK BACK BACK ON ON LINE'
-        });
+
+        // Reply({
+        //     channel:REPORT_CHANNEL,
+        //     text:'BOT BOT BOT BACK BACK BACK ON ON LINE'
+        // });
     }
 
     registerCommands() {
@@ -70,6 +72,8 @@ export default class BotBotBot {
 
         const body = req.body as SlackMessage;
         const { registeredCommands } = this;
+
+        Logger.log('parseHook', JSON.stringify(body));
 
         // Slack sends a token to prove its authenticity, if it doesn't match, reject
         if (!body.token || body.token !== VERIFICATION_TOKEN) return res.status(401).send();
