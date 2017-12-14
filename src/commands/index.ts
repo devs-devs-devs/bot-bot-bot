@@ -85,12 +85,12 @@ export default class BotBotBot {
         // Everything else from here is kosher
         res.status(200).send();
 
-        if (body.event && body.event.text) {
+        if (body.event && this.getText(body.event)) {
             const { event } = body;
 
             if (event.username === BOT_NAME) return;
 
-            let trigger = event.text.split(' ',1)[0];
+            let trigger = this.getText(event).split(' ',1)[0];
             if (trigger[0] === TRIGGER_PREFIX) {
                 const triggerCommand = registeredCommands[trigger.substring(1)];
                 if (triggerCommand) return triggerCommand.reply(body);
@@ -101,6 +101,10 @@ export default class BotBotBot {
 
         }
 
+    }
+
+    getText(event) {
+        return event.message && event.message.text ? event.message.text : event.text || '';
     }
 
 }
