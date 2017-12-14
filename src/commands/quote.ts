@@ -49,13 +49,12 @@ export class Quote extends Command {
         const lines: string[] = [];
 
         event.message.attachments.forEach((attachment: any) => {
-            lines.push(`&lt; <@${attachment.author_id}> &gt; ${attachment.text}`.trim())
+            lines.push(`&lt; <@${attachment.author_id || attachment.author_subname}> &gt; ${attachment.text}`.trim())
         });
 
         Logger.log('quote', lines);
 
-        const insertResult = await Data.pool.query('INSERT INTO `quote` (`quote`, `user`) VALUES(?, ?)', [lines.join("\n").trim(), event.message.user]);
-        console.log(insertResult);
+        const insertResult = await Data.pool.query('INSERT INTO `quote` (`quote`, `user`) VALUES(?, ?)', [lines.join("\n").trim(), event.bot_id || event.message.user || event.message.username]);
         if (insertResult.length) {
             Reply({
                 text:`Quote added:

@@ -8,6 +8,7 @@ export interface SlackEvent {
     event_ts?: string;
     message?: any;
     subtype?: string;
+    bot_id?: string;
 }
 
 export interface SlackMessage {
