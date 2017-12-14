@@ -11,7 +11,8 @@ import { default as Command, CommandInterface } from './command';
 import { Trigger } from './trigger';
 import { Copypasta } from './copypasta';
 import { Emphasis } from './emphasis';
-import { Quote } from './quote';
+//import { Quote } from './quote';
+
 import { SlackMessage } from '../interfaces/slack';
 import Reply from '../services/reply';
 
@@ -26,7 +27,7 @@ export default class BotBotBot {
         Trigger,
         Copypasta,
         Emphasis,
-        Quote
+        //Quote
     ];
 
     constructor(app: Application) {
