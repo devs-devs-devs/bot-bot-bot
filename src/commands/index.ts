@@ -10,6 +10,7 @@ import Logger from '../services/logger';
 import { default as Command, CommandInterface } from './command';
 import { Trigger } from './trigger';
 import { Copypasta } from './copypasta';
+import { Emphasis } from './emphasis';
 
 import { SlackMessage } from '../interfaces/slack';
 import Reply from '../services/reply';
@@ -23,7 +24,8 @@ export default class BotBotBot {
     private commadsToRegister: any = [
         Command,
         Trigger,
-        Copypasta
+        Copypasta,
+        Emphasis
     ];
 
     constructor(app: Application) {

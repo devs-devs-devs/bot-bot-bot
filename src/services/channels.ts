@@ -35,7 +35,7 @@ class Channels {
                     this.channels = res.body.channels;
                     Logger.log(this.serviceName, this.channels.length, 'channels retrieved');
                     this.channels.forEach((channel:any) => {
-                        this.join(channel.name)
+                        this.join(channel.name);
                     })
                 }
 
@@ -48,10 +48,12 @@ class Channels {
 
     }
 
-    join(name: string) {
+    join(channelName: string) {
+
+        Logger.log(this.serviceName, 'joining channel', channelName);
 
         const payload = {
-            name,
+            name: channelName,
             token: SLACK_TOKEN
         };
 
@@ -67,6 +69,8 @@ class Channels {
                         channel:res.body.channel.id
                     });
                     Logger.log(this.serviceName, res.body.channel.name, 'joined');
+                } else {
+                    console.log(res.body);
                 }
             });
 
