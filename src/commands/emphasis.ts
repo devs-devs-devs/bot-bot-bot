@@ -18,8 +18,9 @@ export class Emphasis extends Command {
         const { action, params } = this.parseText(event.text);
 
         const emoji = action[0] === ':' ? action : ':clap:';
+        const sentence = action[0] === ':' ? params : `${action} ${params}`;
 
-        const emphasis = params.split(' ').join(` ${emoji} `);
+        const emphasis = sentence.split(' ').join(` ${emoji} `);
 
         Reply({
             text: `_${emphasis}_`
