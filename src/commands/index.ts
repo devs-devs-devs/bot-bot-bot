@@ -88,7 +88,7 @@ export default class BotBotBot {
         if (body.event && this.getText(body.event)) {
             const { event } = body;
 
-            if (event.username === BOT_NAME) return;
+            if (event.username === BOT_NAME || event.subtype === 'bot_message') return;
 
             let trigger = this.getText(event).split(' ',1)[0];
             if (trigger[0] === TRIGGER_PREFIX) {

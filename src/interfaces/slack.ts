@@ -7,6 +7,7 @@ export interface SlackEvent {
     channel: string;
     event_ts?: string;
     message?: any;
+    subtype?: string;
 }
 
 export interface SlackMessage {
