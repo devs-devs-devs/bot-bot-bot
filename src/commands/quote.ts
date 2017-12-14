@@ -2,7 +2,8 @@ import Command from './command';
 import Reply from '../services/reply';
 import Data from '../services/data';
 import Users from '../services/users';
-import { SlackEvent, SlackMessage } from '../interfaces/slack';
+import Logger from '../services/logger';
+import { SlackEvent } from '../interfaces/slack';
 
 export class Quote extends Command {
 
@@ -51,7 +52,10 @@ export class Quote extends Command {
             lines.push(`&lt; <@${attachment.author_id}> &gt; ${attachment.text}`.trim())
         });
 
+        Logger.log('quote', lines);
+
         const insertResult = await Data.pool.query('INSERT INTO `quote` (`quote`, `user`) VALUES(?, ?)', [lines.join("\n").trim(), event.message.user]);
+        console.log(insertResult);
         if (insertResult.length) {
             Reply({
                 text:`Quote added:
