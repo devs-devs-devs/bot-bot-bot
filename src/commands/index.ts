@@ -12,6 +12,7 @@ import { Trigger } from './trigger';
 import { Copypasta } from './copypasta';
 import { Emphasis } from './emphasis';
 import { Quote } from './quote';
+import { RightThere } from './rightthere';
 
 import { SlackEvent, SlackMessage } from '../interfaces/slack';
 import Reply from '../services/reply';
@@ -27,7 +28,8 @@ export default class BotBotBot {
         Trigger,
         Copypasta,
         Emphasis,
-        Quote
+        Quote,
+        RightThere
     ];
 
     constructor(app: Application) {
