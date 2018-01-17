@@ -13,7 +13,7 @@ import { Copypasta } from './copypasta';
 import { Emphasis } from './emphasis';
 import { Quote } from './quote';
 import { RightThere } from './rightthere';
-import { Lilfunnel } from './Lilfunnel';
+import { Lilfunnel } from './lilfunnel';
 
 import { SlackEvent, SlackMessage } from '../interfaces/slack';
 import Reply from '../services/reply';
