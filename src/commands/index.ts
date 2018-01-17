@@ -13,11 +13,12 @@ import { Copypasta } from './copypasta';
 import { Emphasis } from './emphasis';
 import { Quote } from './quote';
 import { RightThere } from './rightthere';
+import { Lilfunnel } from './Lilfunnel';
 
 import { SlackEvent, SlackMessage } from '../interfaces/slack';
 import Reply from '../services/reply';
 
-const { VERIFICATION_TOKEN, BOT_NAME, TRIGGER_PREFIX, REPORT_CHANNEL } = process.env;
+const {VERIFICATION_TOKEN, BOT_NAME, TRIGGER_PREFIX, REPORT_CHANNEL} = process.env;
 
 export default class BotBotBot {
 
@@ -29,7 +30,8 @@ export default class BotBotBot {
         Copypasta,
         Emphasis,
         Quote,
-        RightThere
+        RightThere,
+        Lilfunnel
     ];
 
     constructor(app: Application) {
@@ -47,8 +49,8 @@ export default class BotBotBot {
         this.registerCommands();
 
         Reply({
-            channel:REPORT_CHANNEL,
-            text:'BOT BOT BOT BACK BACK BACK ON ON LINE'
+            channel: REPORT_CHANNEL,
+            text: 'BOT BOT BOT BACK BACK BACK ON ON LINE'
         });
     }
 
@@ -61,9 +63,9 @@ export default class BotBotBot {
     // TODO: How do you assign a type here
     registerCommand(command: any) {
         const instantiatedCommand = new command(this.app);
-        const { registeredCommands } = this;
+        const {registeredCommands} = this;
 
-        const { commands } = instantiatedCommand;
+        const {commands} = instantiatedCommand;
 
         for (let commandKey of commands) {
             const isAlreadyRegistered = !!registeredCommands[commandKey];
@@ -74,7 +76,7 @@ export default class BotBotBot {
     parseHook(req: Request, res: Response) {
 
         const body = req.body as SlackMessage;
-        const { registeredCommands } = this;
+        const {registeredCommands} = this;
 
         Logger.log('parseHook', JSON.stringify(body));
 
@@ -88,11 +90,11 @@ export default class BotBotBot {
         res.status(200).send();
 
         if (body.event && this.getText(body.event)) {
-            const { event } = body;
+            const {event} = body;
 
             if (event.username === BOT_NAME || event.subtype === 'bot_message') return;
 
-            let trigger = this.getText(event).split(' ',1)[0];
+            let trigger = this.getText(event).split(' ', 1)[0];
             if (trigger[0] === TRIGGER_PREFIX) {
                 const triggerCommand = registeredCommands[trigger.substring(1)];
                 if (triggerCommand) return triggerCommand.reply(body);
