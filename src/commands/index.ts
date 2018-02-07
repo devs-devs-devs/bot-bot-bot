@@ -83,6 +83,8 @@ export default class BotBotBot {
 
         Logger.log('parseHook', JSON.stringify(body));
 
+        if (body && body.event && body.event.text) Markov.write(body.event.text);
+
         // Slack sends a token to prove its authenticity, if it doesn't match, reject
         if (!body.token || body.token !== VERIFICATION_TOKEN) return res.status(401).send();
 
@@ -104,7 +106,6 @@ export default class BotBotBot {
             }
 
             // Catch All Triggers
-            Markov.write(event.message);
             this.registeredCommands.trigger.scan(body);
 
         }
