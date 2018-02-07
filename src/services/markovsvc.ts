@@ -1,5 +1,6 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import Logger from './logger';
 
 const markov = require('markov');
 
@@ -25,7 +26,7 @@ class Markov {
     }
 
     write(str: string = '') {
-        console.log('Writing to file', str);
+        Logger.log('Writing to file', str);
         fs.appendFileSync(markovFile, str.trim()+"\n");
     }
 
