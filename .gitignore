@@ -61,3 +61,4 @@ typings/
 bot-data/
 bot-data.json
 dist/
+markov.txt

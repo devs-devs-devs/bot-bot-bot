@@ -17,6 +17,8 @@ import { Lilfunnel } from './lilfunnel';
 
 import { SlackEvent, SlackMessage } from '../interfaces/slack';
 import Reply from '../services/reply';
+import { MarkovCommand } from './markov';
+import Markov from '../services/markovsvc';
 
 const {VERIFICATION_TOKEN, BOT_NAME, TRIGGER_PREFIX, REPORT_CHANNEL} = process.env;
 
@@ -31,7 +33,8 @@ export default class BotBotBot {
         Emphasis,
         Quote,
         RightThere,
-        Lilfunnel
+        Lilfunnel,
+        MarkovCommand
     ];
 
     constructor(app: Application) {
@@ -101,6 +104,7 @@ export default class BotBotBot {
             }
 
             // Catch All Triggers
+            Markov.write(event.message);
             this.registeredCommands.trigger.scan(body);
 
         }
