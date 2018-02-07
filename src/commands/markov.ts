@@ -18,8 +18,9 @@ export class MarkovCommand extends Command {
 
     reply(body: SlackMessage) {
         const event = body.event as SlackEvent;
+        const { action, params } = this.parseText(event.text);
 
-        Markov.reply(event.text).then((reply: any) => {
+        Markov.reply(`${action} ${params}`).then((reply: any) => {
             Reply({
                 text: reply
             }, event);
