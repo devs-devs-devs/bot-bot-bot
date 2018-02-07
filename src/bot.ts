@@ -32,4 +32,4 @@ const app = express();
 app.use(bodyParser.json());
 new BotBotBot(app);
 
-app.listen(3001, () => Logger.log(chalk.green('Express:'), 'Listening on 3003'));
+app.listen(3002, () => Logger.log(chalk.green('Express:'), 'Listening on 3003'));
