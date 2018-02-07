@@ -16,15 +16,14 @@ export class MarkovCommand extends Command {
 
     }
 
-    reply(body: SlackMessage) {
+    async reply(body: SlackMessage) {
         const event = body.event as SlackEvent;
         const { action, params } = this.parseText(event.text);
 
-        Markov.reply(`${action} ${params}`).then((reply: any) => {
-            Reply({
-                text: reply
-            }, event);
-        });
+        const text = await Markov.reply(`${action} ${params}`);
+        Reply({
+            text
+        }, event);
 
     }
 

@@ -14,14 +14,14 @@ class Markov {
         fs.ensureFileSync(markovFile);
     }
 
-    reply(inputText: string) {
+    reply(inputText: string = 'wanker') {
         return new Promise((resolve,reject) => {
-            const m = markov(1);
+            const m = markov(2);
             const s = fs.createReadStream(markovFile);
-            m.seed(s, () => {
+            m.seed(s, function () {
                 const reply = m.respond(inputText).join(' ');
                 resolve(reply);
-            })
+            });
         });
     }
 
