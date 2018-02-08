@@ -34,7 +34,7 @@ export default class BotBotBot {
         Quote,
         RightThere,
         Lilfunnel,
-        //MarkovCommand
+        MarkovCommand
     ];
 
     constructor(app: Application) {
