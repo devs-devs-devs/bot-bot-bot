@@ -82,7 +82,7 @@ export default class BotBotBot {
         const {registeredCommands} = this;
 
         Logger.log('parseHook', JSON.stringify(body));
-        if (body && body.event && (body.event.bot_id || (body.event.user !== 'U87U6ES12' && body.event.type !== 'member_joined_channel'))) return console.log('Tis message is from a bot! AVOID!');
+        if (body && body.event && body.event.bot_id) return console.log('Tis message is from a bot! AVOID!');
 
         if (body && body.event && body.event.text) Markov.write(body.event.text);
 
