@@ -10,14 +10,16 @@ fs.ensureFileSync(markovFile);
 
 class Markov {
 
+    public filePath: string = markovFile;
+
     constructor() {
-        fs.ensureFileSync(markovFile);
+        fs.ensureFileSync(this.filePath);
     }
 
     reply(inputText: string = 'wanker') {
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve, reject) => {
             const m = markov(2);
-            const s = fs.createReadStream(markovFile);
+            const s = fs.createReadStream(this.filePath);
             m.seed(s, function () {
                 const reply = m.respond(inputText).join(' ');
                 resolve(reply);
@@ -27,7 +29,7 @@ class Markov {
 
     write(str: string = '') {
         Logger.log('Writing to file', str);
-        fs.appendFileSync(markovFile, str.trim()+"\n");
+        fs.appendFileSync(this.filePath, str.trim() + '\n');
     }
 
 }
