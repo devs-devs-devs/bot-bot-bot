@@ -45,7 +45,10 @@ export class MarkovCommand extends Command {
             'U5SV39UP5'
         ];
 
-        if (size.actual >= 1000000 || allowedUsers.indexOf(event.user as string) !== -1) {
+        if (
+            (size.actual >= 1000000 || allowedUsers.indexOf(event.user as string) !== -1)
+            && action !== 'progress'
+        ) {
             text = await Markov.reply(`${action} ${params}`);
         } else {
             text = `${Math.round(size.actual / 1000000 * 100)}% loaded`;
