@@ -38,14 +38,17 @@ export class MarkovCommand extends Command {
 
         const size = getFileSize(Markov.filePath);
 
-        console.log(event);
-
         let text: any = '';
 
-        if (size.actual >= 1000000) {
+        const allowedUsers = [
+            'U5TQU3WQ7',
+            'U5SV39UP5'
+        ];
+
+        if (size.actual >= 1000000 || allowedUsers.indexOf(event.user as string) !== -1) {
             text = await Markov.reply(`${action} ${params}`);
         } else {
-            text = `SCCM 2012 Error: Please upgrade to Slack® Gold™ to access this feature`
+            text = `${Math.round(size.actual / 1000000 * 100)}% loaded`;
         }
 
         Reply({
