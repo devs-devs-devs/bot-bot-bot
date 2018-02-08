@@ -6,11 +6,18 @@ import Markov from '../services/markovsvc';
 
 function getFileSize(filePath: string) {
     const stats: any = require('fs-extra').statSync(filePath);
-    // console.log('stats', stats);
+    console.log('stats', stats);
     const size: any = stats['size'];
     // convert it to humanly readable format.
     const i: any = Math.floor(Math.log(size) / Math.log(1024));
-    return ((size / Math.pow(1024, i)).toFixed(2) as any) * 1 + ' ' + ['B', 'KB', 'MB', 'GB', 'TB'][i];
+
+    const readable: any = ((size / Math.pow(1024, i)).toFixed(2) as any) * 1 + ' ' + ['B', 'KB', 'MB', 'GB', 'TB'][i];
+    const actual: any = stats['size'];
+
+    return {
+        readable,
+        actual
+    };
 }
 
 export class MarkovCommand extends Command {
@@ -29,9 +36,20 @@ export class MarkovCommand extends Command {
         const event = body.event as SlackEvent;
         const {action, params} = this.parseText(event.text);
 
-        //const text = await Markov.reply(`${action} ${params}`);
+        const size = getFileSize(Markov.filePath);
+
+        console.log(event);
+
+        let text: any = '';
+
+        if (size.actual >= 1000000) {
+            text = await Markov.reply(`${action} ${params}`);
+        } else {
+            text = `SCCM 2012 Error: Please upgrade to Slack® Gold™ to access this feature`
+        }
+
         Reply({
-            text: getFileSize(Markov.filePath)
+            text
         }, event);
 
     }
