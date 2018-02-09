@@ -12,7 +12,7 @@ let m: any;
 let s: any;
 
 function reSeedMarkov() {
-    m = new markov(2);
+    m = new markov(5);
     s = fs.createReadStream(markovFile);
     m.seed(s, function() {});
 }
