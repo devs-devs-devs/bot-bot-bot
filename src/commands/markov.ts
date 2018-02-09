@@ -46,12 +46,12 @@ export class MarkovCommand extends Command {
         ];
 
         if (
-            (size.actual >= 1000000 || allowedUsers.indexOf(event.user as string) !== -1)
+            (size.actual >= 100000 || allowedUsers.indexOf(event.user as string) !== -1)
             && action !== 'progress'
         ) {
             text = await Markov.reply(`${action} ${params}`);
         } else {
-            text = `${Math.round(size.actual / 1000000 * 100)}% loaded`;
+            text = `${Math.round(size.actual / 100000 * 100)}% loaded`;
         }
 
         Reply({
