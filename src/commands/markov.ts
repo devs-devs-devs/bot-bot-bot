@@ -29,30 +29,13 @@ export class MarkovCommand extends Command {
 
     async init() {
         // Does nothing
-
     }
 
     async reply(body: SlackMessage) {
         const event = body.event as SlackEvent;
         const {action, params} = this.parseText(event.text);
 
-        const size = getFileSize(Markov.filePath);
-
-        let text: any = '';
-
-        const allowedUsers = [
-            'U5TQU3WQ7',
-            'U5SV39UP5'
-        ];
-
-        if (
-            (size.actual >= 100000 || allowedUsers.indexOf(event.user as string) !== -1)
-            && action !== 'progress'
-        ) {
-            text = await Markov.reply(`${action} ${params}`);
-        } else {
-            text = `${Math.round(size.actual / 100000 * 100)}% loaded`;
-        }
+        const text = await Markov.reply(`${action} ${params}`);
 
         Reply({
             text
