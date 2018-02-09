@@ -8,6 +8,21 @@ const markovFile = path.resolve(__dirname, '../../markov.txt');
 console.log('MARKOVFILE', markovFile);
 fs.ensureFileSync(markovFile);
 
+let m: any;
+let s: any;
+
+function reSeedMarkov() {
+    m = new markov(2);
+    s = fs.createReadStream(markovFile);
+    m.seed(s, function() {});
+}
+
+setInterval(() => {
+    reSeedMarkov();
+}, 3600 * 1000);
+
+reSeedMarkov();
+
 class Markov {
 
     public filePath: string = markovFile;
@@ -17,14 +32,7 @@ class Markov {
     }
 
     reply(inputText: string = 'wanker') {
-        return new Promise((resolve, reject) => {
-            const m = markov(2);
-            const s = fs.createReadStream(this.filePath);
-            m.seed(s, function () {
-                const reply = m.respond(inputText).join(' ');
-                resolve(reply);
-            });
-        });
+        return Promise.resolve(m.respond(inputText).join(' ').trim());
     }
 
     write(str: string = '') {
