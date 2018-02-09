@@ -4,22 +4,6 @@ import { SlackEvent, SlackMessage } from '../interfaces/slack';
 
 import Markov from '../services/markovsvc';
 
-function getFileSize(filePath: string) {
-    const stats: any = require('fs-extra').statSync(filePath);
-    console.log('stats', stats);
-    const size: any = stats['size'];
-    // convert it to humanly readable format.
-    const i: any = Math.floor(Math.log(size) / Math.log(1024));
-
-    const readable: any = ((size / Math.pow(1024, i)).toFixed(2) as any) * 1 + ' ' + ['B', 'KB', 'MB', 'GB', 'TB'][i];
-    const actual: any = stats['size'];
-
-    return {
-        readable,
-        actual
-    };
-}
-
 export class MarkovCommand extends Command {
 
     constructor() {
