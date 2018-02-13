@@ -19,7 +19,7 @@ export class MarkovCommand extends Command {
         const event = body.event as SlackEvent;
         const {action, params} = this.parseText(event.text);
 
-        const text = await Markov.reply(`${action} ${params}`.trim());
+        const text = await Markov.reply([action, params].join(' ').trim());
 
         Reply({
             text

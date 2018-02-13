@@ -31,7 +31,8 @@ class Markov {
     }
 
     reply(str: string) {
-        return Promise.resolve(megahal.getReplyFromSentence(str));
+        //return Promise.resolve(megahal.getReplyFromSentence(str));
+        return Promise.resolve(megahal.getReply(str))
     }
 
     write(str: string = '') {
