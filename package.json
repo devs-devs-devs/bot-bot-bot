@@ -21,6 +21,7 @@
     "@types/node": "^8.0.53",
     "@types/superagent": "^3.5.6",
     "dotenv": "^4.0.0",
+    "markov-chains-text": "^1.0.0",
     "nodemon": "^1.12.1",
     "ts-node": "^3.3.0",
     "typescript": "^2.6.2"

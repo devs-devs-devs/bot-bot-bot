@@ -3,21 +3,13 @@ import * as path from 'path';
 import Logger from './logger';
 
 const markov = require('markov');
+const Text = require('markov-chains-text');
 
 const markovFile = path.resolve(__dirname, '../../markov.txt');
 console.log('MARKOVFILE', markovFile);
 fs.ensureFileSync(markovFile);
 
-let m: any;
-let s: any;
-
-function reSeedMarkov() {
-    m = new markov(5);
-    s = fs.createReadStream(markovFile);
-    m.seed(s, function() {});
-}
-
-function parseLine(str) {
+function parseLine(str: string) {
     const lines = fs.readFileSync(markovFile).toString().split('\n');
     if (str.length > 100) return false;
     if (str === '') return false;
@@ -26,12 +18,33 @@ function parseLine(str) {
     return str;
 }
 
+// let m: any;
+// let s: any;
+//
+// function reSeedMarkov() {
+//     m = new markov(5);
+//     s = fs.createReadStream(markovFile);
+//     m.seed(s, function() {});
+// }
+//
+//
+//
+// setInterval(() => {
+//     reSeedMarkov();
+// }, 3600 * 1000);
+
+//reSeedMarkov();
+
+let markovSeed: any;
+
+function seedMarkov() {
+    markovSeed = new Text(fs.readFileSync(markovFile));
+}
 
 setInterval(() => {
-    reSeedMarkov();
+    seedMarkov();
 }, 3600 * 1000);
-
-reSeedMarkov();
+seedMarkov();
 
 class Markov {
 
@@ -41,8 +54,8 @@ class Markov {
         fs.ensureFileSync(this.filePath);
     }
 
-    reply(inputText: string = 'wanker') {
-        return Promise.resolve(m.respond(inputText).join(' ').trim());
+    reply() {
+        return Promise.resolve(markovSeed.makeSentence().trim());
     }
 
     write(str: string = '') {
