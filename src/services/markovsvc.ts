@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import Logger from './logger';
 
-const markov = require('markov');
+const jsmegahal = require('jsmegahal');
 
 const markovFile = path.resolve(__dirname, '../../markov.txt');
 console.log('MARKOVFILE', markovFile);
@@ -17,17 +17,8 @@ function parseLine(str: string) {
     return str;
 }
 
-let markovSeed: any;
-
-function seedMarkov() {
-    markovSeed = new markov(5);
-    markovSeed(fs.readFileSync(markovFile));
-}
-
-setInterval(() => {
-    seedMarkov();
-}, 3600 * 1000);
-seedMarkov();
+let megahal: any = new jsmegahal(4);
+megahal.addMass(fs.readFileSync(markovFile));
 
 class Markov {
 
@@ -38,8 +29,7 @@ class Markov {
     }
 
     reply(str: string) {
-        const key = str.split(' ')[0] || ':banned:';
-        return Promise.resolve(markovSeed.fill(key, 12));
+        return Promise.resolve(megahal.getReplyFromSentence(str));
     }
 
     write(str: string = '') {
@@ -47,6 +37,7 @@ class Markov {
         if (canWrite) {
             Logger.log('Writing to file', str);
             fs.appendFileSync(this.filePath, str.trim() + '\n');
+            megahal.add(str.trim());
         }
     }
 
