@@ -3,7 +3,6 @@ import * as path from 'path';
 import Logger from './logger';
 
 const markov = require('markov');
-const Text = require('markov-chains-text').default;
 
 const markovFile = path.resolve(__dirname, '../../markov.txt');
 console.log('MARKOVFILE', markovFile);
@@ -18,27 +17,11 @@ function parseLine(str: string) {
     return str;
 }
 
-// let m: any;
-// let s: any;
-//
-// function reSeedMarkov() {
-//     m = new markov(5);
-//     s = fs.createReadStream(markovFile);
-//     m.seed(s, function() {});
-// }
-//
-//
-//
-// setInterval(() => {
-//     reSeedMarkov();
-// }, 3600 * 1000);
-
-//reSeedMarkov();
-
 let markovSeed: any;
 
 function seedMarkov() {
-    markovSeed = new Text(fs.readFileSync(markovFile));
+    markovSeed = new markov(5);
+    markovSeed(fs.readFileSync(markovFile));
 }
 
 setInterval(() => {
@@ -54,8 +37,9 @@ class Markov {
         fs.ensureFileSync(this.filePath);
     }
 
-    reply() {
-        return Promise.resolve(markovSeed.makeSentence());
+    reply(str: string) {
+        const key = str.split(' ')[0] || ':banned:';
+        return Promise.resolve(markovSeed.fill(key, 12));
     }
 
     write(str: string = '') {
