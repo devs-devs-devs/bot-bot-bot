@@ -18,7 +18,7 @@ function parseLine(str: string) {
 }
 
 let megahal: any = new jsmegahal(4);
-megahal.addMass(fs.readFileSync(markovFile));
+megahal.addMass(fs.readFileSync(markovFile).toString());
 
 class Markov {
 
