@@ -3,7 +3,7 @@ import * as path from 'path';
 import Logger from './logger';
 
 const markov = require('markov');
-const Text = require('markov-chains-text');
+const Text = require('markov-chains-text').default;
 
 const markovFile = path.resolve(__dirname, '../../markov.txt');
 console.log('MARKOVFILE', markovFile);
@@ -55,7 +55,7 @@ class Markov {
     }
 
     reply() {
-        return Promise.resolve(markovSeed.makeSentence().trim());
+        return Promise.resolve(markovSeed.makeSentence());
     }
 
     write(str: string = '') {
