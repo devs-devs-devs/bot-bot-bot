@@ -22,7 +22,7 @@ export class Lilfunnel extends Command {
         let message = '';
 
         if (currentDate > dueDate) {
-            message = `RIP Lil' Funnel, victim of Malaysian Airlines Flight MH370`
+            message = `:callum2: :f: •?((¯°·._.•  RIP Lil' Funnel, victim of Malaysian Airlines Flight MH370 •._.·°¯))؟• :f: :callum:`
         } else if (currentDate < dueDate) {
 
             message = `I return in `;
