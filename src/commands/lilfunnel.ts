@@ -16,13 +16,13 @@ export class Lilfunnel extends Command {
     reply(body: SlackMessage) {
         const event = body.event as SlackEvent;
 
-        const dueDate = new Date('2018-02-15 00:00:00');
+        const dueDate = new Date('2018-02-15 06:45:00');
         const currentDate = new Date();
 
         let message = '';
 
         if (currentDate > dueDate) {
-            message = `I'm already back, yo!`
+            message = `RIP Lil' Funnel, victim of Malaysian Airlines Flight MH370`
         } else if (currentDate < dueDate) {
 
             message = `I return in `;
@@ -41,7 +41,7 @@ export class Lilfunnel extends Command {
             totalSeconds -= minutes * 60;
             if (minutes) message += `${minutes} minutes `;
 
-            const seconds = totalSeconds % 60;
+            const seconds = Math.round(totalSeconds % 60);
             if (seconds) message += `${seconds} seconds `;
 
         }
